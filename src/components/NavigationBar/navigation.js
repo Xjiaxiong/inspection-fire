@@ -1,0 +1,25 @@
+
+//匹配路由标题
+export default {
+    '/': '消防督查',
+    '/AccountChoose': '职位选择',
+    '/Main': '消防督查',
+    '/SearchAround': '搜索周边',
+    '/TroubleFix': '隐患整改统计',
+    '/FixInfo': '单位整改情况',
+    '/FixDetail': '整改详情',
+    '/ChecksDetail': '记录详情',
+    '/UnitCheck': '单位检查',
+    '/CheckTypes': '检查类型',
+    '/PatrolRecord': '巡查记录查询',
+    '/PatrolDetail': '巡查记录明细',
+    '/PswUpdate':'密码修改',
+    '/ReFix':'重新整改',
+    '/PassFix': '通过',
+    '/SearchPage': '请搜索',
+    '/UnitCheckTypes': '检查模板选择',
+    '/Login': '登陆',
+    '/Around': '周边',
+    '/Myself': '我的',
+    '/DemoList': '测试',
+}

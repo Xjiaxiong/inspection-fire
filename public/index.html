@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
@@ -24,11 +24,68 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>消防督查</title>
+    <script src="https://as.alipayobjects.com/g/component/fastclick/1.0.6/fastclick.js"></script>
+    <script>
+      if ('addEventListener' in document) {
+        document.addEventListener('DOMContentLoaded', function() {
+          FastClick.attach(document.body);
+        }, false);
+      }
+      if(!window.Promise) {
+        document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js"'+'>'+'<'+'/'+'script>');
+      }
+    </script>
+    <!-- 政府埋点脚本 -->
+    <script src="https://wpk-gate.zjzwfw.gov.cn/static/wpk-jssdk.1.0.2/wpkReporter.js" crossorigin="true"></script>
+    <script>
+      try {
+        const config = {
+          bid: 'xfdc_zzdpro',
+          signkey: '1234567890abcdef',
+          gateway: 'https://wpk-gate.zjzwfw.gov.cn'
+        };
+        const wpk = new wpkReporter(config);
+        wpk.installAll();
+        window._wpk = wpk;
+      } catch (err) {
+        console.error('WpkReporter init fail', err);
+      }
+    </script>
+    <script>
+      (function(w, d, s, q, i) {
+        w[q] = w[q] || [];
+        var f = d.getElementsByTagName(s)[0],j = d.createElement(s);
+        j.async = true;
+        j.id = 'beacon-aplus';
+        j.src = 'https://alidt.alicdn.com/alilog/mlog/aplus_cloud.js';
+        f.parentNode.insertBefore(j, f);
+      })(window, document, 'script', 'aplus_queue');
+    
+      aplus_queue.push({
+        action: 'aplus.setMetaInfo',
+        arguments: ['aplus-rhost-v', 'alog.zjzwfw.gov.cn']
+      });
+      aplus_queue.push({
+        action: 'aplus.setMetaInfo',
+        arguments: ['aplus-rhost-g', 'alog.zjzwfw.gov.cn']
+      });
+      
+      var u = navigator.userAgent
+      var isAndroid = u.indexOf('Android') > -1
+      var isIOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    
+      aplus_queue.push({
+        action: 'aplus.setMetaInfo',
+        arguments: ['appId', isAndroid ? '28302650' : isIOS ? '28328447' : '47130293']
+      });
+    </script>
+    <!-- 政府埋点脚本 -->
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=xYAKjDGY3Yl1Cia3zLmVMCDkOi9ysaNP"></script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
