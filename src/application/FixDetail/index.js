@@ -9,6 +9,7 @@ import {
 } from './style'
 
 import { Steps, Toast, WhiteSpace } from 'antd-mobile'
+import Scroll from '../../baseUI/scroll/index'
 import manIcon from './img/man.png'
 import ImgAgree from './img/chapter_agree.png'
 import ImgCancel from './img/chapter_cancel.png'
@@ -131,23 +132,27 @@ function FixDetail(props) {
     }
     return (
         <Container>
-            <ListInfo>
-                <div className='row'>
-                    <div className='label'>隐患描述</div>
-                    <div className='text'>{pageData?pageData.fdesc:'无数据'}</div>
+            <Scroll refresh>
+                <div>
+                    <ListInfo>
+                        <div className='row'>
+                            <div className='label'>隐患描述</div>
+                            <div className='text'>{pageData?pageData.fdesc:'无数据'}</div>
+                        </div>
+                        <div className='row'>
+                            <div className='label'>预计开始</div>
+                            <div className='text'>{pageData?formatDate(pageData.fpre_start_time,'YYYY-MM-DD'):''}</div>
+                        </div>
+                        <div className='row'>
+                            <div className='label'>预计结束</div>
+                            <div className='text'>{pageData?formatDate(pageData.fpre_end_time,'YYYY-MM-DD'):''}</div>
+                        </div>
+                        <img className='state-img' src={renderStateImg(pageData?pageData.fopt_type:'')} alt=""/>
+                    </ListInfo>
+                    <Title>处理进度</Title>
+                    <WhitePanel>{renderSteps()}</WhitePanel>
                 </div>
-                <div className='row'>
-                    <div className='label'>预计开始</div>
-                    <div className='text'>{pageData?formatDate(pageData.fpre_start_time,'YYYY-MM-DD'):''}</div>
-                </div>
-                <div className='row'>
-                    <div className='label'>预计结束</div>
-                    <div className='text'>{pageData?formatDate(pageData.fpre_end_time,'YYYY-MM-DD'):''}</div>
-                </div>
-                <img className='state-img' src={renderStateImg(pageData?pageData.fopt_type:'')} alt=""/>
-            </ListInfo>
-            <Title>处理进度</Title>
-            <WhitePanel>{renderSteps()}</WhitePanel>    
+            </Scroll>    
         </Container>
     )
 }

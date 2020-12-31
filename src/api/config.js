@@ -5,6 +5,7 @@ import { getTicket } from './request'
 
 export const baseUrl = '/api' 
 //export const baseUrl = 'http://111.0.89.21:9010/'
+//export const baseUrl = 'http://ding.fireyu.com/'
 
 const _config = {
     corpId: '53441', //企业ID
@@ -12,7 +13,7 @@ const _config = {
 //axios 的实例及拦截器配置
 const axiosInstance = axios.create({
     baseURL: baseUrl,
-    timeout: 30*1000,
+    timeout: 60*1000,
 })
 
 axiosInstance.interceptors.response.use(

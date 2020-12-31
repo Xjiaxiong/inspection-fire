@@ -70,19 +70,49 @@ function FixInfo(props) {
         props.history.push(`/FixDetail?fdevice_maint_uuid=${uuid}`)
     }
     const renderDesc = (props)=> {
-        let personLabel = '节点负责人'
-        if(props.fnode_state === 'N13' ) {
+        let personLabel = '责任人'
+        let node_state = props.fnode_state;
+        let isFixState = false;
+        if( node_state === 'N13' ) {
             personLabel = '检查人'
         }
-        if(props.fnode_state === 'N14' ||  props.fnode_state === 'N15') {
+        if(node_state === 'N14' ||  node_state === 'N15') {
+            isFixState = true;
             personLabel = '整改人'
         }
-        if(props.fnode_state === 'N08' || props.fnode_state === 'N11' || props.fnode_state === 'N17') {
+        if(node_state === 'N08' || node_state === 'N11' || node_state === 'N16'|| node_state === 'N17') {
             personLabel = '审核人'
+        }
+        if(node_state === 'N14') {
+            return (
+                <DescBox>
+                    <div className='date'>{formatDate(props.fcreate_time,'YYYY-MM-DD hh:mm')}</div>
+                    <div className='row'>
+                        <div className='label'>整改单位</div>
+                        <div className='text'>{props.fsocial_name}</div>
+                    </div>
+                    <div className='row'>
+                        <div className='label'>责任人</div>
+                        <div className='text'>{props.fchecker_name}</div>
+                    </div>
+                    <div className='row'>
+                        <div className='label'>联系电话</div>
+                        <div className='text'>{props.fchecker_tel}</div>
+                    </div>
+                </DescBox>    
+            )            
         }
         return (
             <DescBox>
                 <div className='date'>{formatDate(props.fcreate_time,'YYYY-MM-DD hh:mm')}</div>
+                {
+                    !isFixState ? null : (
+                        <div className='row'>
+                            <div className='label'>整改单位</div>
+                            <div className='text'>{props.fsocial_name}</div>
+                        </div>
+                    )
+                }
                 <div className='row'>
                     <div className='label'>{personLabel}</div>
                     <div className='text'>{props.fnode_name}</div>

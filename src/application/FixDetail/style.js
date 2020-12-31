@@ -3,7 +3,11 @@ import globalStyle, { r } from '../../assets/global-style'
 
 
 export const Container = styled.div`
-    padding-top: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
 `
 export const Title = styled.div`
     height: 44px;

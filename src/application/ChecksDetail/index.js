@@ -65,14 +65,14 @@ function ChecksDetail(props) {
                     },
                     data: [
                         {
-                            value: base ? parseInt(base.fcurrent_score): 0,
+                            value: base ? parseFloat(base.fcurrent_score): 0,
                             name: '分',
                             itemStyle: {
                                 color: '#538fef'
                             }
                         },
                         {
-                            value: base ? parseInt(base.deduct_score): 0,
+                            value: base ? parseFloat(base.deduct_score): 0,
                             name: '扣分',
                             label: {
                                 show: false
