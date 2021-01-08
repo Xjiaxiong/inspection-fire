@@ -14,11 +14,14 @@
     "customize-cra": "^1.0.0",
     "dayjs": "^1.9.6",
     "echarts": "^4.9.0",
+    "express": "^4.17.1",
     "gdt-jsapi": "^1.9.4",
     "http-proxy-middleware": "^1.0.6",
+    "http-server": "^0.12.3",
     "immutable": "^4.0.0-rc.12",
     "lib-flexible": "^0.3.2",
     "md5": "^2.3.0",
+    "mockjs": "^1.1.0",
     "prop-types": "^15.7.2",
     "rc-form": "^2.4.11",
     "react": "^17.0.1",
@@ -40,7 +43,8 @@
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "mock": "node ./mock/server.js"
   },
   "eslintConfig": {
     "extends": [

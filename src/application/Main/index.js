@@ -57,11 +57,12 @@ function Main(props) {
     const renderUser = () => {
         const name = localStorage.getItem('person_name');
         const depart = localStorage.getItem('depart_name');
-        const avatar =  localStorage.getItem('avatar_img');
-        const avTarUrl = avatar ? `/api/zwDing/getAvatar?media_id=${avatar}` : ''
+        //const avatar =  localStorage.getItem('avatar_img');
+        //const avTarUrl = avatar ? `/api/zwDing/getAvatar?media_id=${avatar}` : ''
         return (
             <Row>
-                { avTarUrl ? <img src={avTarUrl} alt=""/> : <img src={userDefault} alt="defaultImg"/>}
+                <img src={userDefault} alt="defaultImg"/>
+                {/* { avTarUrl ? <img src={avTarUrl} alt="userPic"/> : <img src={userDefault} alt="defaultImg"/>} */}
                 <div className='person-info'>
                     <p className='title'>{ name ? name: '用户' }</p>
                     <p className='desc'>{depart ? depart: '管理员'}</p>

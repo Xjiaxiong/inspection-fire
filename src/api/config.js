@@ -1,11 +1,10 @@
 import axios from 'axios'
 import authConfig from 'gdt-jsapi/authConfig'
 import { getTicket } from './request'
-//import alert from 'gdt-jsapi/alert'
+// import setStorageItem from 'gdt-jsapi/setStorageItem'
 
 export const baseUrl = '/api' 
-//export const baseUrl = 'http://111.0.89.21:9010/'
-//export const baseUrl = 'http://ding.fireyu.com/'
+//export const baseUrl = 'https://czw.menhey.cn'
 
 const _config = {
     corpId: '53441', //企业ID
@@ -33,6 +32,34 @@ const doAuthConfig = async () => {
     }).catch(err =>{})
 }
 const storeUserInfo = (curUser) => {
+    // setStorageItem({
+    //     name:'person_uuid',
+    //     key: curUser.fperson_uuid
+    // })
+    // setStorageItem({
+    //     name:'person_name',
+    //     key: curUser.fperson_name
+    // })
+    // setStorageItem({
+    //     name:'depart_uuid',
+    //     key: curUser.fpermaint_uuid
+    // })
+    // setStorageItem({
+    //     name:'depart_name',
+    //     key: curUser.fpermaint_name
+    // })
+    // setStorageItem({
+    //     name:'role_uuid',
+    //     key: curUser.frole_uuid
+    // })
+    // setStorageItem({
+    //     name:'user_uuid',
+    //     key: curUser.fuser_uuid
+    // })
+    // setStorageItem({
+    //     name:'ftoken',
+    //     key: curUser.ftoken
+    // })
     localStorage.setItem('person_uuid', curUser.fperson_uuid);
     localStorage.setItem('person_name', curUser.fperson_name);
     localStorage.setItem('depart_uuid', curUser.fpermaint_uuid);

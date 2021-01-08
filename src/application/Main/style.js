@@ -47,6 +47,8 @@ export const Row = styled.div`
         font-size: ${globalStyle['font-size-1']};
         line-height: 32px;
         font-weight: 700;
+        width: 3.666rem;
+        ${globalStyle.noWrap()}
     }
     .desc {
         color: ${globalStyle['color-text1-2']};

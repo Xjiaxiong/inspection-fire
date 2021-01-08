@@ -71,3 +71,5 @@ export const UnitTypeMapCode = {
     "G7808": "国家机关事业单位",
     "G7809": "民宅"
 }
+//数据请求地址
+export const MOCK_TEST = '/test/getmock'

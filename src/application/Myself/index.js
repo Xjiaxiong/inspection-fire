@@ -8,6 +8,7 @@ import {
     WhiteSpace,
     Button
 } from 'antd-mobile';
+import { getWrapParams, clearLocStore } from '../../api/utils'
 import defaultImg from './img/ico_user.png'
 import about from './img/about.png'
 import lock from './img/lock.png'
@@ -19,13 +20,42 @@ const Item = List.Item;
 function Myself(props) {
     const doAbout = () => {
         dd.alert({
-            message: "消防督查 Version 1.0"
-        });
+            message: "Version 1.0",
+            title: "消防督查",
+            button: "确定"
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {})
+    }
+    const viewUserInfo = () => {
+        dd.alert({
+            message: JSON.stringify(getWrapParams()),
+            title: "用户数据",
+            button: "确定"
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {})
+    }
+    const clearStore = () => {
+        dd.confirm({
+            title: "温馨提示",
+            message: "您是否想清除缓存,然后重启应用",
+            buttonLabels: [
+                "确定",
+                "取消"
+            ],
+        }).then(res => {
+            if(res.buttonIndex === 0) {
+                clearLocStore()
+                dd.closePage().then(res => {
+                    console.log(res)
+                }).catch(err => {})
+            }
+
+        }).catch(err => {})
+        
     }
     const doOut = () => {
-        // dd.closePage().then(res => {
-        //     console.log(res)
-        // }).catch(err => {})
         props.history.push('/Login')
     }
     const toChangePassWord = () => {
@@ -34,12 +64,12 @@ function Myself(props) {
     const renderUser = () => {
         const name = localStorage.getItem('person_name');
         const depart = localStorage.getItem('depart_name');
-        const avatar =  localStorage.getItem('avatar_img');
-        const avTarUrl = avatar ? `/api/zwDing/getAvatar?media_id=${avatar}` : ''
-        let img =  avTarUrl ? <img src={avTarUrl} alt="avatar"/> : <img src={defaultImg} alt="avatar"/>
+        // const avatar =  localStorage.getItem('avatar_img');
+        // const avTarUrl = avatar ? `/api/zwDing/getAvatar?media_id=${avatar}` : ''
+        // let img =  avTarUrl ? <img src={avTarUrl} alt="userPic"/> : <img src={defaultImg} alt="avatar"/>
         return (
             <div className='inner'>
-                {img}
+                <img src={defaultImg} alt="avatar" onClick={() => viewUserInfo()}/>
                 <p className='title'>{name}</p>
                 <p>{depart}</p>
             </div>
@@ -57,7 +87,7 @@ function Myself(props) {
                 </Item>
                 <Item
                     thumb={draft}
-                    onClick={() => {}}
+                    onClick={() => clearStore()}
                     arrow="horizontal"
                     >清除缓存
                 </Item>

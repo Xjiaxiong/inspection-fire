@@ -1,4 +1,10 @@
 import { axiosInstance } from './config'
+import * as API from './constant'
+//测试
+export const getUserByAuthMock = () => {
+    return axiosInstance.get(`${API.MOCK_TEST}`)
+}
+
 //登陆,JSAPI鉴权相关
 export const getUserByAuthCode = auth_code => {
     return axiosInstance.get(`/zwDing/getUserInfo?auth_code=${auth_code}`)

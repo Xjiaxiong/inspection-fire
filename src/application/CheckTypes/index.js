@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 import { List } from 'antd-mobile'
 import Scroll from  '../../baseUI/scroll/index'
-import Loading from '../../baseUI/loading/index'
 import NoDataTip from '../../components/NoDataTip/index'
 import icon from './zhangcheng.png'
 import { connect } from "react-redux";
@@ -20,7 +19,7 @@ const ListItem = List.Item;
 
 const CheckTypes = (props)=> {
 
-    const { checkTypeList, enterLoading } = props
+    const { checkTypeList } = props
     const { getCheckTypesDispatch } = props
 
     useEffect(() => {
@@ -58,7 +57,6 @@ const CheckTypes = (props)=> {
                         }
                     </List>
                     {checkTypeListJS.length ===0 ? <NoDataTip></NoDataTip> : null }   
-                    { enterLoading ? <Loading></Loading> : null}
                 </div>
             </Scroll>    
         </ScrollContainer>
@@ -66,7 +64,6 @@ const CheckTypes = (props)=> {
 }
 const mapStateToProps = state => ({
     checkTypeList: state.getIn (['checktypes', 'checkTypeList']),
-    enterLoading: state.getIn (['checktypes', 'enterLoading'])
 });
 const mapDispatchToProps = dispatch => {
     return {

@@ -8,10 +8,10 @@ export const plusUser = (user_nick, user_id) => {
     });
   
     // 设置会员昵称
-    aplus_queue.push({
-        action: "aplus.setMetaInfo",
-        arguments: ["_user_nick", user_nick]
-    });
+    // aplus_queue.push({
+    //     action: "aplus.setMetaInfo",
+    //     arguments: ["_user_nick", user_nick]
+    // });
     // 设置会员ID
     aplus_queue.push({
         action: "aplus.setMetaInfo",

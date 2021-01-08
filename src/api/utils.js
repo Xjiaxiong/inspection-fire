@@ -1,4 +1,4 @@
-
+// import getStorageItem from 'gdt-jsapi/getStorageItem'
 export const getCount = (count) => {
     if(count < 0) return
     if(count < 10000) {
@@ -54,17 +54,28 @@ export const getName = list => {
 //对象是否为空
 export const isEmptyObject  = obj => !obj || Object.keys(obj).length === 0;
 
-const user = {
-  depart_uuid: localStorage.getItem('depart_uuid'),
-  depart_name: localStorage.getItem('depart_name'),
-  person_uuid: localStorage.getItem('person_uuid'),
-  person_name: localStorage.getItem('person_name'),
-  role_uuid: localStorage.getItem('role_uuid'),
-  user_uuid: localStorage.getItem('user_uuid'),
-  ftoken: localStorage.getItem('ftoken')
+export const clearLocStore = () => {
+  localStorage.removeItem('depart_uuid')
+  localStorage.removeItem('depart_name')
+  localStorage.removeItem('person_uuid')
+  localStorage.removeItem('person_name')
+  localStorage.removeItem('role_uuid')
+  localStorage.removeItem('user_uuid')
+  localStorage.removeItem('ftoken')
 }
-
 export const getWrapParams = obj => {
+  const user = {
+    depart_uuid: localStorage.getItem('depart_uuid'),
+    depart_name: localStorage.getItem('depart_name'),   
+    person_uuid: localStorage.getItem('person_uuid'),
+    person_name: localStorage.getItem('person_name'),
+    role_uuid: localStorage.getItem('role_uuid'),
+    user_uuid: localStorage.getItem('user_uuid'),
+    ftoken: localStorage.getItem('ftoken')
+  }
+  if(isEmptyObject(obj)) {
+    obj = {}
+  }
   return {
       ...obj,
       ...user
@@ -82,4 +93,18 @@ export const GetQuery = url => {
      }  
   }  
   return theRequest; 
+}
+
+export const MP = () => {
+    let ak = 'xYAKjDGY3Yl1Cia3zLmVMCDkOi9ysaNP';
+    return new Promise(function(resolve, reject) {
+      var script = document.createElement('script')
+      script.type = 'text/javascript'
+      script.dataset.name = 'map'
+      script.src = `https://api.map.baidu.com/api?v=3.0&ak=${ak}&callback=initMap` //callback调用init函数。
+      document.head.appendChild(script)
+      window.initMap = (BMap) => {
+            resolve(BMap)
+      }
+      })
 }

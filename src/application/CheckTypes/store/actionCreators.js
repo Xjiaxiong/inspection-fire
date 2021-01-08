@@ -11,12 +11,6 @@ export const changeList = data => ({
   data: fromJS(data)
 })
 
-export const changeEnterLoading = data => ({
-  type: actionTypes.CHANGE_ENTER_LOADING,
-  data
-});
-
-
 //异步获取数据
 export const getCheckTypes= (params) => {
   return (dispatch) => {
@@ -28,7 +22,6 @@ export const getCheckTypes= (params) => {
           } else {
             console.log("检查类型查询失败,",data.desc)
           }
-          dispatch(changeEnterLoading(false))
       }).catch(() => {
           console.log ("检查类型传输错误");
       }) 

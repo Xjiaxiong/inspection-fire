@@ -88,6 +88,7 @@ function Around(props) {
     const [maxLev, setMaxLev] = useState('')
     const [maxName, setMaxName] = useState('')
     const [selectLev, setSelectLev] = useState('')
+    //const [map, setMap] = useState(null);
     useEffect(() => {
         let map = new BMap.Map("map-container");
         let point = new BMap.Point(116.404, 39.915);
@@ -95,15 +96,13 @@ function Around(props) {
         let geolocation = new BMap.Geolocation()
         geolocation.enableSDKLocation() // 允许SDK辅助
         geolocation.getCurrentPosition(function (r) {
-        if (this.getStatus() === 0) {
-            var point = new BMap.Point(r.longitude,r.latitude);
-            map.centerAndZoom(new BMap.Point(r.longitude, r.latitude), 16);
-            map.addOverlay(new BMap.Marker(point))
-        }
+            if (this.getStatus() === 0) {
+                var point = new BMap.Point(r.longitude,r.latitude);
+                map.centerAndZoom(new BMap.Point(r.longitude, r.latitude), 16);
+                map.addOverlay(new BMap.Marker(point))
+            }
         })
-        return () => {
-            map = null
-        }
+        // eslint-disable-next-line
     },[])
     useEffect(() => {
         getStatistic()
@@ -143,7 +142,7 @@ function Around(props) {
         let areaObj = await getAreaListRequest(getWrapParams(params)).catch(e => {
             Toast.fail('请求失败了',e)
         })
-        if(areaObj.code === '1') {
+        if(areaObj && areaObj.code === '1') {
             let res = areaObj.data[0]
             setAreaList(res.area_list)
             setCurLev(res.farea_level)
