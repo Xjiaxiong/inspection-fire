@@ -24,6 +24,25 @@ import PassFix from "../application/PassFix";
 import SearchPage from "../application/SearchPage"
 import UnitCheckTypes from "../application/UnitCheckTypes"
 import Login from '../application/Login'
+import ProjectDetail from '../application/ProjectDetail'
+import ScorePart from '../application/ScorePart'
+import RankPart from '../application/RankPart'
+import HistoryInfo from '../application/HistoryInfo'
+import WirelessAlarmList from '../application/WirelessAlarmList'
+import GridManPatrols from '../application/GridManPatrols'
+import DeviceSetupInfo from '../application/DeviceSetupInfo'
+import DeviceDetail from '../application/DeviceDetail'
+import Parts from '../application/Parts'
+import PartHandle from '../application/PartHandle'
+import RecordFire from '../application/RecordFire'
+import FireDetail from '../application/FireDetail'
+import RescueIn from '../application/RescueIn'
+import AreaFilter from '../application/AreaFilter'
+import EntityDetail from '../application/EntityDetail'
+import PartPatrolRecrod from '../application/PartPatrolRecrod'
+import PartElecsys from '../application/PartElecsys'
+import ElecStatusList from '../application/ElecStatusList'
+import SysPatrolDayDetail from '../application/SysPatrolDayDetail'
 
 const commomRoutes = [
     {
@@ -109,6 +128,82 @@ const commomRoutes = [
     {
         path: '/AccountChoose',
         component: AccountChoose
+    },
+    {
+        path: '/ProjectDetail',
+        component: ProjectDetail  
+    },
+    {
+        path: '/ScorePart',
+        component: ScorePart
+    },
+    {
+        path: '/RankPart',
+        component: RankPart  
+    },
+    {
+        path: '/HistoryInfo',
+        component: HistoryInfo
+    },
+    {
+        path: '/WirelessAlarmList',
+        component: WirelessAlarmList
+    },
+    {
+        path: '/GridManPatrols',
+        component: GridManPatrols
+    },
+    {
+        path: '/DeviceSetupInfo',
+        component: DeviceSetupInfo
+    },
+    {
+        path: '/DeviceDetail',
+        component: DeviceDetail
+    },
+    {
+        path: '/Parts',
+        component: Parts
+    },
+    {
+        path: '/PartHandle',
+        component: PartHandle
+    },
+    {
+        path: '/RecordFire',
+        component: RecordFire
+    },
+    {
+        path: '/FireDetail',
+        component: FireDetail
+    },
+    {
+        path: '/RescueIn',
+        component: RescueIn
+    },
+    {
+        path: '/AreaFilter',
+        component: AreaFilter
+    },
+    {
+        path: '/EntityDetail',
+        component: EntityDetail
+    },
+    {
+        path: '/PartPatrolRecrod',
+        component: PartPatrolRecrod
+    },
+    {
+        path: '/PartElecsys',
+        component: PartElecsys
+    },
+    {
+        path: '/ElecStatusList',
+        component: ElecStatusList
+    },
+    {
+        path: '/SysPatrolDayDetail',
+        component: SysPatrolDayDetail
     }]
 //过度路由
 export const routes0 = [{

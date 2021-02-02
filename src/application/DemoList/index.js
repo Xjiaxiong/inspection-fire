@@ -1,23 +1,29 @@
-import React, { useEffect } from 'react'
+
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getUserByAuthMock } from '../../api/request'
+import PopList from '../../baseUI/popList/index'
 
 export const Container = styled.div`
     padding-top: 50px;
 `
-
+const mtype = 'M20'
 function DemoList(props) {
-    useEffect(() => {
-        test()
-    },[])
-    const test = async () => {
-        let res = await getUserByAuthMock();
-        console.log(res);
+    const [alarmShow, setAlarmShow] = useState(false)
+    const showList = () => {
+        setAlarmShow(true)
+    }
+    const hidePop = () => {
+        setAlarmShow(false)
     }
     return (
-        <Container>
-            测试页面
-        </Container>    
+        <>
+            <button onClick={() => showList()}>click me !</button>
+            <PopList 
+            mtype={mtype} 
+            show={alarmShow}
+            hidePop={hidePop}
+            ></PopList>    
+        </>
     )
 }
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 //全局默认样式, 图标处理
 import { GlobalStyle } from './style';
 import { IconStyle } from './assets/iconfont/iconfont';
-import { _config, storeUserInfo, doAuthConfig } from './api/config'
+import { _config, storeUserInfo } from './api/config'
 //路由处理
 import {
   routes0, 
@@ -29,8 +29,8 @@ let curUser = {};
 function App() {
   const [routes, setRoutes] = useState(routes0)
   const checkUser = async () => {
-    const testRes = await getUserByAuthCode(2020)
-    console.log(testRes)
+    // const testRes = await getUserByAuthCode(2020)
+    // console.log(testRes)
     try {
       const { code } =  await dd.getAuthCode({corpId: _config.corpId})
       localStorage.setItem('authCode',code);
@@ -58,7 +58,6 @@ function App() {
             paramsUser.append('ftoken',ftoken)
             let loginStatus = await LoginRequest(paramsUser)
             if(loginStatus.code === "1") {
-              doAuthConfig() //JSAPI鉴权处理
               storeUserInfo(curUser) //缓存用户数据
               setRoutes(routes2)
             } else {
@@ -81,6 +80,24 @@ function App() {
   useEffect(() => {
     checkUser()
     //eslint-disable-next-line
+    // let curUser = {
+    //   fperson_uuid: "CFB232783361414098EFAEDCBB429948",
+    //   fperson_name: "测试人员",
+    //   fpermaint_uuid: "8724466BCFFE42B59A39181A62204B90",
+    //   fpermaint_name: "铁拳办",
+    //   frole_uuid: "D583C02FF2B5497D9B9EBFFDDB8B22A3",
+    //   fuser_uuid: "01898C55CD854D70AB9D04C9D77800B0",
+    //   ftoken: "00000000000000,ebd58b6c3b8411ebb6e97cd30ab799a4",
+    //   fprovince_id: "330000"
+    // }
+    // localStorage.setItem('person_uuid', curUser.fperson_uuid);
+    // localStorage.setItem('person_name', curUser.fperson_name);
+    // localStorage.setItem('depart_uuid', curUser.fpermaint_uuid);
+    // localStorage.setItem('depart_name', curUser.fpermaint_name);
+    // localStorage.setItem('role_uuid', curUser.frole_uuid);
+    // localStorage.setItem('user_uuid', curUser.fuser_uuid);
+    // localStorage.setItem('ftoken', curUser.ftoken);
+    // localStorage.setItem('province_code', curUser.fprovince_id);
   },[])
 
   return (

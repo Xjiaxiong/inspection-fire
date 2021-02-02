@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { List } from './style'
 import { WingBlank , Button } from 'antd-mobile'
 import { LoginRequest } from '../../api/request'
-import { storeUserInfo, doAuthConfig } from '../../api/config'
+import { storeUserInfo } from '../../api/config'
 import dd from 'gdt-jsapi'
 
 function AccountChoose (props) {
@@ -26,7 +26,6 @@ function AccountChoose (props) {
         //登陆结束...
         dd.hideLoading()
         if(loginStatus.code === "1") {
-          doAuthConfig()
           //缓存用户数据
           storeUserInfo(curUser)
           //localStorage.setItem('selectIndex', selectIndex);

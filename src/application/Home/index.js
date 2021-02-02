@@ -16,14 +16,18 @@ function Home(props) {
     const Querys = GetQuery(props.location.search)
     const pathname = location.pathname;
     useEffect(() => {
+        let title = navigation[pathname]
+        if(Querys._type && Querys._type === "update") {
+            title = "单位修改"
+        }
         setTitle({
-            title: navigation[pathname]
+            title: title
         }).then(res => {
             console.log(res)
         }).catch(err => {})
         //埋点数据发送
         let pageParams = {
-            page_name: navigation[pathname],
+            page_name: title,
             page_url: pathname,
             page_id: APP_UUID
         }

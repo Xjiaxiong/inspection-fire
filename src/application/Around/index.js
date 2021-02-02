@@ -6,75 +6,25 @@ import {
     SelectPanel
 } from './style'
 import { Button, Toast }from 'antd-mobile'
-import fireImg from './fire.png'
-import faultImg from './fault.png'
+import fireImg from '../../assets/imgs/fire.png'
+import faultImg from '../../assets/imgs/fault.png'
 import Scroll from '../../baseUI/scroll/index'
 import { get3Count, getWrapParams } from '../../api/utils'
-import { getMapStatisticRequest, getAreaListRequest} from '../../api/request'
+import elecImg from '../../assets/imgs/elec.png'
+import { getMapStatisticRequest, getAreaListRequest, getMapDataRequest} from '../../api/request'
+import PopList from '../../baseUI/popList/index'
 import dd from 'gdt-jsapi';
+import { itemData, getImgByType, sytlesCluster } from './constant'
+import showLoading from 'gdt-jsapi/showLoading'
+import hideLoading from 'gdt-jsapi/hideLoading'
+import alert from 'gdt-jsapi/alert'
+// import MarkerClusterManager from './MarkerClusterManager'
+// const BMap = window.BMap;
+// const BMapLib = window.BMapLib;
+const AMap = window.AMap;
+let map = null;
+let markerClusterer = null;
 
-const itemData = [{
-    id:'1',
-    text: '联网单位',
-    value: 0
-},{
-    id:'2',
-    text: '出租私房',
-    value: 0
-},{
-    id:'3',
-    text: '高层建筑',
-    value: 0
-},{
-    id:'4',
-    text: '九小场所',
-    value: 0
-},{
-    id:'5',
-    text: '人密场所',
-    value: 0
-},{
-    id:'6',
-    text: '生产企业',
-    value: 0
-},{
-    id:'7',
-    text: '远程联网',
-    value: 0
-},{
-    id:'8',
-    text: '微型消防站',
-    value: 0
-},{
-    id:'9',
-    text: '充电桩',
-    value: 0
-},{
-    id:'10',
-    text: '公共视频',
-    value: 0
-},{
-    id:'11',
-    text: '高空瞭望',
-    value: 0
-},{
-    id:'12',
-    text: '室外消火栓',
-    value: 0
-},{
-    id:'13',
-    text: '火警告警',
-    value: 0
-},{
-    id:'14',
-    text: '电力告警',
-    value: 0
-},{
-    id:'15',
-    text: '故障消息',
-    value: 0
-}]
-const BMap = window.BMap;
 function Around(props) {
     const [itemCounts, setItemCounts] = useState(itemData)
     const [areaTop, setAreaTop] = useState(false)
@@ -88,20 +38,51 @@ function Around(props) {
     const [maxLev, setMaxLev] = useState('')
     const [maxName, setMaxName] = useState('')
     const [selectLev, setSelectLev] = useState('')
-    //const [map, setMap] = useState(null);
+    const [alarmShow, setAlarmShow] = useState(false)
+    const [mType, setMType] = useState('M20');
     useEffect(() => {
-        let map = new BMap.Map("map-container");
-        let point = new BMap.Point(116.404, 39.915);
-        map.centerAndZoom(point, 10);
-        let geolocation = new BMap.Geolocation()
-        geolocation.enableSDKLocation() // 允许SDK辅助
-        geolocation.getCurrentPosition(function (r) {
-            if (this.getStatus() === 0) {
-                var point = new BMap.Point(r.longitude,r.latitude);
-                map.centerAndZoom(new BMap.Point(r.longitude, r.latitude), 16);
-                map.addOverlay(new BMap.Marker(point))
+        map = new AMap.Map("map-container",{
+            zoom: 10,
+            viewMode: '2D',
+            center: [116.397428, 39.90923] 
+        });
+        AMap.plugin('AMap.Geolocation', function() {
+            let geolocation = new AMap.Geolocation({
+              // 是否使用高精度定位，默认：true
+              enableHighAccuracy: true,
+              // 设置定位超时时间，默认：无穷大
+              timeout: 10000,
+              // 定位按钮的停靠位置的偏移量，默认：Pixel(10, 20)
+              buttonOffset: new AMap.Pixel(10, 20),
+              //  定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+              zoomToAccuracy: true,     
+              //  定位按钮的排放位置,  RB表示右下
+              buttonPosition: 'LB',
+              showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+              showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+            })
+            map.addControl(geolocation);
+            geolocation.getCurrentPosition(function(status,result){
+                  if(status === 'complete'){
+                      onComplete(result)
+                  }else{
+                      onError(result)
+                  }
+            });
+          
+            function onComplete (data) {
+              // data是具体的定位信息
+              console.log("onComplete---",data)
             }
-        })
+          
+            function onError (data) {
+              // 定位出错
+                console.log("onError---",data)
+                alert({
+                    message: "定位fail"
+                })
+            }
+          })
         // eslint-disable-next-line
     },[])
     useEffect(() => {
@@ -125,6 +106,13 @@ function Around(props) {
     }
     const doLink = path => {
         if(path) props.history.push(path)
+    }
+    const showList = (flag) => {
+        setMType(flag)
+        setAlarmShow(true)
+    }
+    const hidePop = () => {
+        setAlarmShow(false)
     }
     const getAreaList = async () => {
         let params = {}
@@ -168,6 +156,7 @@ function Around(props) {
             Toast.fail('请求失败了')
         })
         dd.hideLoading()
+        console.log('res---',res)
         if(res && res.code === '1') {
             let list = res.data.map(item => {
                 return {
@@ -199,6 +188,82 @@ function Around(props) {
             Toast.info('请先选择上一行政等级')
         }
     }
+    const myRenderMarker = (context) => {
+        const type = context.data[0].type;
+        const IconType = getImgByType(type)
+        let imgIcon = new AMap.Icon({
+            size: new AMap.Size(32, 32),
+            image: require(`./imgs/${IconType}`).default,
+            imageSize: new AMap.Size(32, 32),
+            // imageOffset: new AMap.Pixel(-95, -3)
+        });
+        let offset = new AMap.Pixel(-9, -9);
+        context.marker.setOffset(offset)
+        context.marker.setIcon(imgIcon)
+        context.marker.on('click',function() {
+            console.log("context---", context.data[0].type)
+            console.log("context---", context.data[0].uuid)
+            viewDetail(context.data[0].uuid,type)
+        })
+    }
+    const upDataMap = async (type) => {
+        //根据type在地图上显示数据, 聚合, 打点, 能点击
+        showLoading({text:"数据请求中..."});
+        let res = await getMapDataRequest(getWrapParams({
+            mtype: type,
+            farea_level: curLev,
+            farea_code: areaCode,
+            isAMap: 'amap'
+        }))
+        hideLoading();
+        if(res && res.code === '1') {
+            map.plugin(["AMap.MarkerClusterer"], function () {
+                let re = res.data;
+                let item = null;
+                let MAX = re.length;
+                let points = [];
+                let pt = null;
+                let i = 0;
+                for (; i < MAX; i++) {
+                    item = re[i]
+                    pt = {
+                        lnglat:[item.o,item.a],
+                        uuid: item.i,
+                        type,
+                    }
+    
+                    points.push(pt);
+                }
+                if(markerClusterer) {
+                    markerClusterer.setMap(null);
+                }
+                markerClusterer = new AMap.MarkerCluster(map, points, {
+                    styles: sytlesCluster,
+                    gridSize: 60,
+                    renderMarker: myRenderMarker, // 自定义非聚合点样式 
+                });
+            });
+
+        }
+
+    }
+    const viewDetail = (uuid, mType) => {
+        //涉及到视频特殊处理
+        //根据不同的类型展示不同的界面
+        const partTypes = ['M10','M11','M12','M13','M14','M15']
+        let url = ''
+        localStorage.setItem("mType", mType)
+        if(partTypes.includes(mType)) {
+            url = `/ProjectDetail?fproject_uuid=${uuid}`
+        } else {
+            url = `/EntityDetail?fuuid=${uuid}`
+        }
+        props.history.push(url)
+    }
+    const toProject = (fproject_uuid) => {
+        //跳转到项目详情页
+        props.history.push(`/ProjectDetail?fproject_uuid=${fproject_uuid}`)
+    }
     return (
         <ContainerBottom>
             <Map id='map-container'></Map>
@@ -216,7 +281,7 @@ function Around(props) {
                         itemCounts.map((item, index) => {
                             if(index <= 11 ) {
                                 return (
-                                    <li key={item.id}>
+                                    <li key={item.id} onClick={() => upDataMap(item.id)}>
                                         <p>{item.value}</p>
                                         <div>{item.text}</div>
                                     </li>
@@ -227,20 +292,20 @@ function Around(props) {
                     }
                 </ul>
                 <ul className='alarm-panel'>
-                    <li>
+                    <li onClick={() => showList('M20')}>
                         <img src={fireImg} alt=""/>
                         <p>火警告警</p>
-                        {itemCounts.length === 0 ? null : <span>{get3Count(itemCounts[12].value)}</span>}
+                        {!itemCounts[13] ? null : <span>{get3Count(itemCounts[13].value)}</span>}
                     </li>
-                    <li>
-                        <img src={fireImg} alt=""/>
+                    <li onClick={() => showList('M21')}>
+                        <img src={elecImg} alt=""/>
                         <p>电力告警</p>
-                        {itemCounts.length === 0 ? null : <span>{get3Count(itemCounts[13].value)}</span>}
+                        {!itemCounts[14] ? null : <span>{get3Count(itemCounts[14].value)}</span>}
                     </li>
-                    <li>
+                    <li onClick={() => showList('M22')}>
                         <img src={faultImg} alt=""/>
                         <p>故障消息</p>
-                        {itemCounts.length === 0 ? null : <span>{get3Count(itemCounts[14].value)}</span>}
+                        {!itemCounts[15] ? null : <span>{get3Count(itemCounts[15].value)}</span>}
                     </li>
                 </ul>
             </MapContent>
@@ -288,7 +353,8 @@ function Around(props) {
                         <Button type='primary' onClick={() => doComfirm()}>确定</Button>
                     </div>
                 </div>
-            </SelectPanel>     
+            </SelectPanel>
+            <PopList mtype={mType} show={alarmShow} hidePop={hidePop} toProject={toProject}></PopList>     
         </ContainerBottom>
     )
 }

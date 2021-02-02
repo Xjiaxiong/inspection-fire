@@ -5,7 +5,7 @@ import style from '../../assets/global-style';
 export const Tabs = styled.div`
     position: fixed;
     display: flex;
-    align-item: center;
+    align-items: center;
     bottom: 0;
     left: 0;
     background: #fff;

@@ -21,23 +21,35 @@ import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading'
 
 const Step = Steps.Step; 
-
+const PAGE_SIZE = 20;
 const PatrolDetail = (props) => {
     const [searchVal, setSearchVal] = useState('')
     const [totalCount, setTotalCount] = useState(null)
     const [list, setList] = useState([])
+    const [pageNow, setPageNow] = useState(0)
     const Querys = GetQuery(props.location.search)
 
     useEffect(() => {
-        getRecordCount()
+        if(!totalCount) {
+            getRecordCount()
+        }
         // eslint-disable-next-line
     },[])
+    useEffect(() => {
+        if(pageNow > 0) {
+            getMore()
+        }
+        // eslint-disable-next-line
+    },[pageNow])
+    
     const getRecordCount = async () => {
         let parmas = {
              "flag":"1",
              "fgridmodelmain_uuid":Querys.fgridmodelmain_uuid,  
              "fsocialtype": Querys.fsocialtype,
-              search_name: searchVal
+              search_name: searchVal,
+              pagesize: PAGE_SIZE,
+              startnum: 0
         }
         showLoading({text:'数据查询中...'})
         let res = await getPatrolRecordDetailRequest(getWrapParams(parmas)).catch((e) => {
@@ -51,6 +63,30 @@ const PatrolDetail = (props) => {
             } else {
                 setTotalCount(res.data[0])
                 setList(res.data[0].social_list)
+            }
+        } 
+    }
+    const getMore = async () => {
+        let parmas = {
+             "flag":"1",
+             "fgridmodelmain_uuid":Querys.fgridmodelmain_uuid,  
+             "fsocialtype": Querys.fsocialtype,
+              search_name: searchVal,
+              pagesize: PAGE_SIZE,
+              startnum: pageNow*PAGE_SIZE
+        }
+        // showLoading({text:'加载更多...'})
+        let res = await getPatrolRecordDetailRequest(getWrapParams(parmas)).catch((e) => {
+            Toast.fail('查询失败')
+            console.log('获取巡查记录详情失败', e)
+        })
+        // hideLoading()
+        if(res.code === "1") {
+            if(res.data[0].count_num === "0") {
+                Toast.fail('未查询有关数据')
+            } else {
+                let arr = res.data[0].social_list
+                setList([...list,...arr])
             }
         } 
     }
@@ -114,7 +150,9 @@ const PatrolDetail = (props) => {
 
     return (
          <Container>
-             <Scroll refresh>
+             <Scroll
+                pullUp={() => setPageNow(pageNow+1)} 
+                refresh>
                  <div>
                     <Top>
                         <div className='serch-bar'>

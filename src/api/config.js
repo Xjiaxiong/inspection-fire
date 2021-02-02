@@ -1,7 +1,7 @@
 import axios from 'axios'
 import authConfig from 'gdt-jsapi/authConfig'
 import { getTicket } from './request'
-// import setStorageItem from 'gdt-jsapi/setStorageItem'
+import getGeolocation from 'gdt-jsapi/getGeolocation'
 
 export const baseUrl = '/api' 
 //export const baseUrl = 'https://czw.menhey.cn'
@@ -27,39 +27,23 @@ const doAuthConfig = async () => {
     const { accessToken } = resTicket.data;
     authConfig({
       ticket: accessToken,
-      jsApiList:["getGeolocation","previewImage","getUUID"]
+      jsApiList:["getGeolocation","previewImage","getUUID","locateOnMap","searchOnMap"]
     }).then(res =>{
+        getPos()
     }).catch(err =>{})
 }
+const getPos = async () => {
+    let res = await getGeolocation({
+        targetAccuracy : 200,
+        coordinate : 1,
+        withReGeocode : false,
+        useCache: false, //默认是true，如果需要频繁获取地理位置，请设置false
+    }).catch(err => {})
+    const { longitude, latitude } = res;
+    localStorage.setItem('longitude', longitude);
+    localStorage.setItem('latitude', latitude);
+}
 const storeUserInfo = (curUser) => {
-    // setStorageItem({
-    //     name:'person_uuid',
-    //     key: curUser.fperson_uuid
-    // })
-    // setStorageItem({
-    //     name:'person_name',
-    //     key: curUser.fperson_name
-    // })
-    // setStorageItem({
-    //     name:'depart_uuid',
-    //     key: curUser.fpermaint_uuid
-    // })
-    // setStorageItem({
-    //     name:'depart_name',
-    //     key: curUser.fpermaint_name
-    // })
-    // setStorageItem({
-    //     name:'role_uuid',
-    //     key: curUser.frole_uuid
-    // })
-    // setStorageItem({
-    //     name:'user_uuid',
-    //     key: curUser.fuser_uuid
-    // })
-    // setStorageItem({
-    //     name:'ftoken',
-    //     key: curUser.ftoken
-    // })
     localStorage.setItem('person_uuid', curUser.fperson_uuid);
     localStorage.setItem('person_name', curUser.fperson_name);
     localStorage.setItem('depart_uuid', curUser.fpermaint_uuid);
@@ -67,6 +51,8 @@ const storeUserInfo = (curUser) => {
     localStorage.setItem('role_uuid', curUser.frole_uuid);
     localStorage.setItem('user_uuid', curUser.fuser_uuid);
     localStorage.setItem('ftoken', curUser.ftoken);
+    localStorage.setItem('province_code', curUser.fprovince_id);
+    doAuthConfig()
 }
 export {
     doAuthConfig,

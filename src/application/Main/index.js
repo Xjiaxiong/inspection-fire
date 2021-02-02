@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     Container,
     Row,
@@ -10,7 +10,6 @@ import {
     Mymenu,
     MenuItem
 } from './style'
-
 import Scroll from '../../baseUI/scroll/index'
 import imgScore from './img/i_score.png'
 import imgRank from './img/i_rank.png'
@@ -18,11 +17,15 @@ import userDefault from './img/ico_user.png'
 import * as actionTypes from './store/actionCreators'
 import { connect } from "react-redux";
 import { getWrapParams, GetQuery } from '../../api/utils'
+import PopList from '../../baseUI/popList/index'
+// import { zwTypeMap } from '../../api/constant'
 import dd from 'gdt-jsapi'
 
 function Main(props) {
     const { mainInfo,  rankInfo} = props
     const { getMainInfoDataDispatch, getRankInfoDataDispatch } = props
+    const [alarmShow, setAlarmShow] = useState(false)
+    const [mType, setMType] = useState('M20');
     const doLink = path => {
         if(!path) return
         props.history.push(path);
@@ -35,6 +38,17 @@ function Main(props) {
         }).catch(e => {
             dd.alert({message:`扫描失败:${e}`})
         })
+    }
+    const showList = (flag) => {
+        setMType(flag)
+        setAlarmShow(true)
+    }
+    const hidePop = () => {
+        setAlarmShow(false)
+    }
+    const viewAreaFilter = (mType) => {
+        localStorage.setItem('mType',mType)
+        props.history.push(`/AreaFilter`)
     }
     useEffect(() => {
         if(!mainInfo.size) {
@@ -70,8 +84,18 @@ function Main(props) {
             </Row>
         )
     }
+    const toProject = (fproject_uuid) => {
+        //跳转到项目详情页
+        props.history.push(`/ProjectDetail?fproject_uuid=${fproject_uuid}`)
+    }
     return (
         <div>
+            <PopList 
+                mtype={mType} 
+                show={alarmShow} 
+                hidePop={hidePop} 
+                toProject={toProject}>
+            </PopList>
             <Container>
                 <Scroll>
                     <div>
@@ -101,11 +125,11 @@ function Main(props) {
                                     <p className="label">单位总数</p>
                                 </div>
                                 <div>
-                                    <NumberItem>
+                                    <NumberItem onClick={() => showList('M20')}>
                                         <span className="label">火警告警</span>
                                         <span className="value">{countInfos?countInfos['M20']:0}</span>
                                     </NumberItem>
-                                    <NumberItem>
+                                    <NumberItem onClick={() => showList('M22')}>
                                         <span className="label">设备告警</span>
                                         <span className="value">{countInfos?countInfos['M22']:0}</span>
                                     </NumberItem>
@@ -118,23 +142,23 @@ function Main(props) {
                             <div className='f-col-5 right'>
                                 <NumberGroup>
                                     <div>
-                                        <p className='value'>{countInfos?countInfos['M11']:0}</p>
+                                        <p className='value' onClick={() => viewAreaFilter('M11')}>{countInfos?countInfos['M11']:0}</p>
                                         <p className="label">生产企业</p>
                                     </div>
                                     <div >
-                                        <p className='value'>{countInfos?countInfos['M13']:0}</p>
+                                        <p className='value' onClick={() => viewAreaFilter('M13')}>{countInfos?countInfos['M13']:0}</p>
                                         <p className="label">九小场所</p>
                                     </div>
                                     <div>
-                                        <p className='value'>{countInfos?countInfos['M14']:0}</p>
+                                        <p className='value' onClick={() => viewAreaFilter('M14')}>{countInfos?countInfos['M14']:0}</p>
                                         <p className="label">高层建筑</p>
                                     </div>
                                     <div>
-                                        <p className='value'>{countInfos?countInfos['M15']:0}</p>
+                                        <p className='value' onClick={() => viewAreaFilter('M15')}>{countInfos?countInfos['M15']:0}</p>
                                         <p className="label">人密场所</p>
                                     </div>
                                     <div>
-                                        <p className='value'>{countInfos?countInfos['M12']:0}</p>
+                                        <p className='value' onClick={() => viewAreaFilter('M12')}>{countInfos?countInfos['M12']:0}</p>
                                         <p className="label">出租私房</p>
                                     </div>
                                 </NumberGroup>
@@ -142,27 +166,27 @@ function Main(props) {
                         </TotalBox>
                         <DeviceTotal>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M34']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M34')}>{countInfos?countInfos['M34']:0}</p>
                                 <p className='label'>远程联网</p>
                             </div>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M30']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M30')}>{countInfos?countInfos['M30']:0}</p>
                                 <p className='label'>微型消防站</p>
                             </div>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M33']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M33')}>{countInfos?countInfos['M33']:0}</p>
                                 <p className='label'>充电桩</p>
                             </div>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M32']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M32')}>{countInfos?countInfos['M32']:0}</p>
                                 <p className='label'>公共视频</p>
                             </div>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M36']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M36')}>{countInfos?countInfos['M36']:0}</p>
                                 <p className='label'>高空瞭望</p>
                             </div>
                             <div>
-                                <p className='value'>{countInfos?countInfos['M31']:0}</p>
+                                <p className='value' onClick={() => viewAreaFilter('M31')}>{countInfos?countInfos['M31']:0}</p>
                                 <p className='label'>室外消火栓</p>
                             </div>
                         </DeviceTotal>
@@ -179,18 +203,18 @@ function Main(props) {
                                 <div className='icon query'></div>
                                 <p>巡查记录</p>
                             </MenuItem>
-                            {/* <MenuItem>
+                            <MenuItem onClick={() => doLink('/RecordFire')}>
                                 <div className='icon fireRecord'></div>
                                 <p>出警记录录入</p>
-                            </MenuItem> */}
+                            </MenuItem>
                             <MenuItem onClick={() => doLink('/TroubleFix')}>
                                 <div className='icon hiddenQuery'></div>
                                 <p>隐患整改</p>
                             </MenuItem>
-                            {/* <MenuItem>
+                            <MenuItem onClick={() => doLink('/Parts')}>
                                 <div className='icon partAdd'></div>
                                 <p>单位维护</p>
-                            </MenuItem> */}
+                            </MenuItem>
                             {/* <MenuItem>
                                 <div className='icon dayCheck'></div>
                                 <p>隐患督办</p>

@@ -6,6 +6,7 @@ import {
     Button,
     Toast,
 } from 'antd-mobile'
+import { changePasswordRequest, changeNewPasswordRequest } from '../../api/request'
 
 
 const Page = styled.div`
@@ -40,17 +41,38 @@ const PswUpdate = (props) => {
     const [newPsw, setNewPsw] = useState('')
     const [comfirmPsw, setComfirmPsw] = useState('')
     const [isNext, setIsNext] = useState(false)
-    const doNext = () => {
+    const doNext = async () => {
         console.log('下一步',oldPsw)
-        setIsNext(true)
+        let res = await changePasswordRequest({login_pwd:oldPsw})
+        if(res.code === '1') {
+            setIsNext(true)
+        } else {
+            Toast.fail('验证旧密码失败！')
+        }
+
     }
-    const doOk = () => {
+    const doOk = async () => {
         console.log('新密码',newPsw)
         console.log('确认密码',comfirmPsw)
 
         if(newPsw !== comfirmPsw) {
             Toast.fail('两次密码必须一致')
         }
+
+        let res = await changeNewPasswordRequest({
+            login_old_pwd: newPsw,
+            login_pwd: comfirmPsw
+        })
+        if(res.code === '1') {
+            Toast.success('密码修改成功！')
+            setTimeout(() => {
+                props.history.goBack();
+            },1000)
+        } else {
+            Toast.fail('验证旧密码失败！')
+        }
+
+
     }
 
     const renderInput = () => {

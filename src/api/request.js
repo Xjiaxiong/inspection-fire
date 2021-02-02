@@ -1,8 +1,8 @@
 import { axiosInstance } from './config'
-import * as API from './constant'
+import { _API } from './constant'
 //测试
 export const getUserByAuthMock = () => {
-    return axiosInstance.get(`${API.MOCK_TEST}`)
+    return axiosInstance.get(`${_API.MOCK_TEST}`)
 }
 
 //登陆,JSAPI鉴权相关
@@ -99,6 +99,12 @@ export const getPatrolRecordDetailRequest = params => {
 export const getPatrolDetailsRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=GridSocialPatrolHistoryDetail`,params)
 }
+export const getSysPatrolDayRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.monitoraction&method=getSysPatrolDaylist`,params)
+}
+export const getPatrolTypeRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.isaappaction&method=getPatrolType`,params)
+}
 
 //地图页面相关
 export const getAreaListRequest = params => {
@@ -113,12 +119,12 @@ export const getMapDataRequest = params => {
 //修改密码  
 export const changePasswordRequest = params => {
     //login_pwd
-    return axiosInstance.post(`/wdk?action=obj.mhaction&method=changePassword`,params)
+    return axiosInstance.post(_API.COMFIRM_PWD,params)
 }
 export const changeNewPasswordRequest = params => {
     //login_old_pwd
     //login_pwd
-    return axiosInstance.post(`/wdk?action=obj.mhaction&method=changeNewPassword`,params)
+    return axiosInstance.post(_API.UPDATE_PWD,params)
 }
 
 //检查人审核接口
@@ -133,5 +139,99 @@ export const PassRectsRequest = params => {
 export const getUserRankRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.mhareanewaction&method=getRankingAndIntegral`,params)
 }
+
+
+export const getExceptionMsg = params => {
+    return axiosInstance.post(_API.GET_EXCEPTION_MSG ,params)
+}
+export const getProjectInfor = params => {
+    return axiosInstance.post(_API.GET_PROJECT_INFO ,params)
+}
+export const getProjectRank = params => {
+    return axiosInstance.post(_API.GET_PART_RANK ,params)
+}
+export const getProjectMessageList = params => {
+    return axiosInstance.post(_API.GET_PROJECT_MSG ,params)
+}
+export const getWirelessHost = params => {
+    return axiosInstance.post(_API.GET_WIRELESS_HOST ,params)
+}
+export const getInstallInformation = params => {
+    return axiosInstance.post(_API.GET_SET_INFO ,params)
+}
+export const getEquipmentInfo = params => {
+    return axiosInstance.post(_API.GET_EQUIPMENT_INFO ,params)
+}
+export const getGridSocialPatrolHistory = params => {
+    return axiosInstance.post(_API.GET_PATROL_HISTORY ,params)
+}
+export const getParts = params => {
+    return axiosInstance.post(_API.GET_PARTS ,params)
+}
+export const DelPartbyId = params => {
+    return axiosInstance.post(_API.DEL_PART ,params)
+}
+export const getPartUnitTypes = params => {
+    return axiosInstance.post(_API.GET_PART_UNIT_TYPE ,params)
+}
+export const addPartRequest = params => {
+    return axiosInstance.post(_API.ADD_PART ,params)
+}
+export const getPartInfoRequest = params => {
+    return axiosInstance.post(_API.GET_PART_INFO ,params)
+}
+export const updatePartInfoRequest = params => {
+    return axiosInstance.post(_API.UPDATE_PART_INFO ,params)
+}
+export const getAppTypeRequest = params => {
+    return axiosInstance.post(_API.GET_APP_TYPE ,params)
+}
+
+export const getFireList = params => {
+    return axiosInstance.post(_API.GET_FIRE_LIST ,params)
+}
+export const getFireRecordInfo = params => {
+    return axiosInstance.post(_API.GET_FIRE_RECORDINFO ,params)
+}
+export const getWbTypes = params => {
+    return axiosInstance.post(_API.GET_WB_TYPE ,params)
+}
+export const getComfirmTypes = params => {
+    return axiosInstance.post(_API.GET_COMFIRM_TYPE ,params)
+}
+export const dealFireRequest = params => {
+    return axiosInstance.post(_API.DEAL_FIRE ,params)
+}
+export const rescueRecordTypeInRequest = params => {
+    return axiosInstance.post(_API.TYPEIN_RESCUE ,params)
+}
+export const getAreaFilterStatistic = params => {
+    return axiosInstance.post(_API.GET_AREA_FILTER ,params)
+}
+export const getEntityListRequest = params => {
+    return axiosInstance.post(_API.GET_ENTITY_LIST ,params)
+}
+export const getMiniStationRequest = params => {
+    return axiosInstance.post(_API.GET_MINI_STATION ,params)
+}
+export const getChargingPileRequest = params => {
+    return axiosInstance.post(_API.GET_CHARGING_PILE ,params)
+}
+export const getOutDydrantRequest = params => {
+    return axiosInstance.post(_API.GET_OUT_DYDRANT ,params)
+}
+export const getCamerasRequest = params => {
+    return axiosInstance.post(_API.GET_CAMERAS, params)
+}
+export const getElecStaRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.powersystemaction&method=getPowerSystemData`, params)
+}
+export const getPowerStatusListRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.powersystemaction&method=getPowerDevList`, params)
+}
+export const getSysPatrolDayDetailRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.isaappaction&method=getSysPatrolDayDetail`, params)
+}
+
 
 

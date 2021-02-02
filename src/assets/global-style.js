@@ -24,6 +24,15 @@ export const noWrap = () => {
   `
 }
 
+export const tableCell = () => {
+  return`
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    word-wrap: break-word;
+  `
+}
+
 export const bgFull = () => {
   return `
     background-position: 50%;
@@ -82,10 +91,11 @@ let style = {
   "color-brand1-9": "#3296FA", //Link-click
   "green": "#15BC83",
   "yellow": "#f0873a",
+  "red": "fa483a",
   extendClick,
   noWrap,
   bgFull,
-  r
+  tableCell
 };
 
 if(deviceWidth <= 360) {
