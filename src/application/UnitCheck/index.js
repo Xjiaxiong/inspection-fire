@@ -143,7 +143,7 @@ function UnitCheck(props) {
         }
         let params = {
             fgridmodelmain_uuid: querys.fgridmodelmain_uuid, 
-            fsocial_uuid: partInfo.fsocial_id,
+            fsocial_uuid: querys.fsocial_id,
             isneed: '1',
             flist,
         }

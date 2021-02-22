@@ -5,11 +5,13 @@ import {
     List,
     TextareaItem,
     ImagePicker,
-    Button,
-    Toast
+    Button
  } from "antd-mobile";
  import { PassRectsRequest, upImgRequest } from '../../api/request'
  import { GetQuery } from '../../api/utils'
+import showLoading from "gdt-jsapi/showLoading";
+import hideLoading from "gdt-jsapi/hideLoading";
+import toast from "gdt-jsapi/toast";
 
 const Item = List.Item; 
 
@@ -40,7 +42,7 @@ const PassFix = (props) => {
     }
     const submit = async () => {
         //提交
-        Toast.loading('提交中...')
+        showLoading({text:"提交中..."})
         //上传图片
         let fattach_list = [];
         for(let i=0; i<files.length; i++) {
@@ -61,12 +63,21 @@ const PassFix = (props) => {
             f_desc: notes
         }
         let res =  await PassRectsRequest(params)
-        Toast.hide()
+        hideLoading()
         if(res.code === '1') {
-            Toast.success('提交成功')
-            setTimeout(() => {
-                props.history.goBack();
-            },1000)
+            toast({
+                duration: 1.5,
+                icon: "success",
+                text: "提交成功"
+            }).then(res => {
+                props.history.goBack()
+            })
+        } else {
+            toast({
+                duration: 1.5,
+                icon: "error",
+                text: "提交失败"
+            })
         }
     }
     return(

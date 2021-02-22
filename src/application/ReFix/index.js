@@ -5,13 +5,13 @@ import {
     List,
     TextareaItem,
     ImagePicker,
-    Button,
-    Toast
+    Button
  } from "antd-mobile";
  import { RestartRectsRequest, upImgRequest } from '../../api/request'
  import { GetQuery, getWrapParams } from '../../api/utils'
  import showLoading from 'gdt-jsapi/showLoading'
  import hideLoading from 'gdt-jsapi/hideLoading'
+ import toast from "gdt-jsapi/toast";
 
 const Item = List.Item; 
 
@@ -65,10 +65,19 @@ const PassFix = (props) => {
         let res =  await RestartRectsRequest(getWrapParams(params))
         hideLoading()
         if(res.code === '1') {
-            Toast.success('提交成功')
-            setTimeout(() => {
-                props.history.goBack();
-            },1000)
+            toast({
+                duration: 1.5,
+                icon: "success",
+                text: "提交成功"
+            }).then(res => {
+                props.history.goBack()
+            })
+        } else {
+            toast({
+                duration: 1.5,
+                icon: "error",
+                text: "提交失败"
+            })
         }
     }
     return(
