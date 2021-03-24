@@ -18,7 +18,8 @@ function SearchPage (props) {
     let autoFocusInst = null;
     useEffect(() => {
         autoFocusInst.focus()
-    })
+        // eslint-disable-next-line
+    },[])
     useEffect(() => {
         if(searchVal) {
             getSearchList()

@@ -43,6 +43,10 @@ import PartPatrolRecrod from '../application/PartPatrolRecrod'
 import PartElecsys from '../application/PartElecsys'
 import ElecStatusList from '../application/ElecStatusList'
 import SysPatrolDayDetail from '../application/SysPatrolDayDetail'
+import MyWork from '../application/MyWork'
+import MyChecks from '../application/MyChecks'
+import MyHiddenTroubles from '../application/MyHiddenTroubles'
+import PatrolDetailSelf from '../application/PatrolDetailSelf'
 
 const commomRoutes = [
     {
@@ -204,6 +208,22 @@ const commomRoutes = [
     {
         path: '/SysPatrolDayDetail',
         component: SysPatrolDayDetail
+    },
+    {
+        path: '/MyWork',
+        component: MyWork
+    },
+    {
+        path: '/MyChecks',
+        component: MyChecks
+    },
+    {
+        path: '/MyHiddenTroubles',
+        component: MyHiddenTroubles
+    },
+    {
+        path: '/PatrolDetailSelf',
+        component: PatrolDetailSelf
     }]
 //过度路由
 export const routes0 = [{

@@ -13,6 +13,7 @@ import defaultImg from './img/ico_user.png'
 import about from './img/about.png'
 import lock from './img/lock.png'
 import draft from './img/draft.png'
+import work from './img/work.png'
 import dd from 'gdt-jsapi'
 const Item = List.Item;
 
@@ -75,10 +76,19 @@ function Myself(props) {
             </div>
         )
     }
+    const CheckMyWork = () => {
+        props.history.push('/MyWork')
+    }
     return (
         <ContainerBottom>
              <Top>{ renderUser()}</Top>
              <List>
+                <Item
+                    thumb={work}
+                    arrow="horizontal"
+                    onClick={() => CheckMyWork()}
+                    >我的工作情况
+                </Item>
                 <Item
                     thumb={lock}
                     arrow="horizontal"

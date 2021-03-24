@@ -169,8 +169,12 @@ export const SearchBox = styled.div`
     font-size: ${globalStyle['font-size-2']};
     color: ${globalStyle['color-text1-2']};
     border-radius: 4px;
+    &>p {
+        flex: 1;
+    }
     &>i {
         font-size: ${globalStyle['font-size-1']};
+        padding-left: 20px;
         margin-left: auto;
     }
 `

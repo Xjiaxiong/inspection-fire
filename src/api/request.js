@@ -233,5 +233,21 @@ export const getSysPatrolDayDetailRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.isaappaction&method=getSysPatrolDayDetail`, params)
 }
 
+/*
+    *个人工作情况
+*/ 
+export const getPatrolDataSelfRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolData`, params)
+}
+export const getPatrolDataListSelfRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolDataList`, params)
+}
+export const getHiddenListSelfRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolDataList1`, params)
+}
+export const getPatrolDataListBySocTypeSelfRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolDataListBySocType`, params)
+}
+
 
 

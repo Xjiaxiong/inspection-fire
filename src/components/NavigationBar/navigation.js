@@ -40,5 +40,9 @@ export default {
     '/PartPatrolRecrod': '单位巡查记录',
     '/PartElecsys': '点击火灾监控系统',
     '/ElecStatusList': '电力设施状态列表',
-    '/SysPatrolDayDetail': '巡查详情'
+    '/SysPatrolDayDetail': '巡查详情',
+    '/MyWork':'我的工作情况',
+    '/MyChecks':'我的检查情况',
+    '/MyHiddenTroubles':'我的隐患整改',
+    '/PatrolDetailSelf': '检查记录清单'
 }
