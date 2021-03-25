@@ -4,31 +4,22 @@ import {
     MyList,
     MyListItem,
 } from './style'
-// import { 
-//     WhiteSpace,
-//     Tabs,
-//     Picker,
-//     List,
-//     Button,
-//     DatePicker
-// } from 'antd-mobile';
+
 import Scroll from '../../baseUI/scroll/index'
+import BottomTip from '../../components/BottomTip'
 import NoDataTip from '../../components/NoDataTip'
-// import {
-//     formatDate,
-// } from '../../api/constant'
+
 import { getHiddenListSelfRequest } from "../../api/request";
 import { getWrapParams, GetQuery } from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading';
-import toast from 'gdt-jsapi/toast';
 
-const PAGE_SIZE = 8;
+const PAGE_SIZE = 10;
 function MyHiddenTroubles(props) {
-    console.log("im coming")
     const { params } = GetQuery(props.location.search)
     const [list, setList] = useState([])
     const [curPage, setCurPage] = useState(0)
+    const [isMore, setIsMore] = useState(true)
     useEffect(() => {
         if(curPage === 0) {
             getList()
@@ -36,11 +27,11 @@ function MyHiddenTroubles(props) {
         // eslint-disable-next-line
     },[])
     useEffect(() => {
-        if(curPage > 0) {
+        if(curPage > 0 && isMore) {
             getMoreList()
         }
         // eslint-disable-next-line
-    },[curPage])
+    },[curPage,isMore])
 
     const getList = async () => {
         let myParams = JSON.parse(params)
@@ -61,8 +52,8 @@ function MyHiddenTroubles(props) {
         let myParams = JSON.parse(params)
         const res = await getHiddenListSelfRequest(getWrapParams({
             ...myParams,
-            page_size: PAGE_SIZE*curPage,
-            page_num: curPage
+            page_size: curPage,
+            page_num: PAGE_SIZE*curPage
         }))
         hideLoading()
         const {code, data} = res
@@ -72,9 +63,10 @@ function MyHiddenTroubles(props) {
                 let tempList = [...list,...data]
                 setList(tempList)
             } else {
-                toast({
-                    text:"没有更多数据了!"
-                })
+                setIsMore(false)
+                // toast({
+                //     text:"没有更多数据了!"
+                // })
             }
         }
     }
@@ -121,9 +113,10 @@ function MyHiddenTroubles(props) {
                 refresh>
                 <div>
                     { renderList() }
+                    { isMore === true ? null :<BottomTip>已经全部数据了!</BottomTip> }
                 </div>
             </Scroll>
-            {list.length === 0 ? <NoDataTip></NoDataTip> : null}
+            { list.length === 0 ? <NoDataTip></NoDataTip> : null }
         </Container>
     )
 }
