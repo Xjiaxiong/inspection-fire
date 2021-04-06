@@ -7,8 +7,8 @@ import {
     ImagePicker,
     Button
  } from "antd-mobile";
- import { PassRectsRequest, upImgRequest } from '../../api/request'
- import { GetQuery } from '../../api/utils'
+import { PassRectsRequest, upImgRequest } from '../../api/request'
+import { GetQuery, getWrapParams, compress, dataURItoBlob } from '../../api/utils'
 import showLoading from "gdt-jsapi/showLoading";
 import hideLoading from "gdt-jsapi/hideLoading";
 import toast from "gdt-jsapi/toast";
@@ -33,36 +33,74 @@ export const BottomBtn = styled.div`
     }
 `
 
+
 const PassFix = (props) => {
+    let fattachList = [];
     const querys = GetQuery(props.location.search)
     const [notes, setNotes] = useState('')
     const [files, setFiles] = useState([])
     const onChangeFiles = (files, type) => {
         setFiles(files)
     }
+    const upload = async (dataURL) => {
+        let fd = new FormData();
+        let blob = dataURItoBlob(dataURL);
+        fd.append('file', blob);
+        let resImg = await upImgRequest(fd)
+        const data = resImg.data[0]
+        let logoID = data && data.newFileName
+        fattachList.push({
+            "fattach_index": 1,
+            "fattach_link": logoID,
+            "fattach_name": logoID
+        })
+    }
     const submit = async () => {
         //提交
         showLoading({text:"提交中..."})
-        //上传图片
-        let fattach_list = [];
+
+        //上传图片,对图片进行压缩处理
         for(let i=0; i<files.length; i++) {
-            let formData  = new FormData();
-            formData.append("file", files[i].file);
-            let resImg = await upImgRequest(formData)
-            const data = resImg.data[0]
-            let logoID = data.newFileName //获取上传以后的图片ID
-            fattach_list.push({
-                "fattach_index": i,
-                "fattach_link": logoID,
-                "fattach_name": logoID
-            })
+                let reader = new FileReader();
+                reader.readAsDataURL(files[i].file);
+                reader.onloadend = function () {
+                    var result = this.result;
+                    var img = new Image();
+                    img.src = result;
+                    //如果图片大小小于200kb，则直接上传
+                    if (result.length <= 200*1024) {
+                        img = null;
+                        upload(result);
+                        return;
+                    }
+                    //图片加载完毕之后进行压缩，然后上传
+                    if (img.complete) {
+                        callback();
+                    } else {
+                        img.onload = callback;
+                    }
+                    function callback() {
+                        var data = compress(img);
+                        upload(data);
+                        img = null;
+                    }
+                };
         }
+
+        //等待图片压缩上传后，再提交数据
+        setTimeout(() => {
+            doSubmit()
+        },3000)
+
+    }
+
+    const doSubmit = async () => {
         let params = {
-            f_attach: fattach_list,
+            f_attach: fattachList,
             fhdcorrectmain_uuid: querys.fhdcorrectmain_uuid,
             f_desc: notes
         }
-        let res =  await PassRectsRequest(params)
+        let res =  await PassRectsRequest(getWrapParams(params))
         hideLoading()
         if(res.code === '1') {
             toast({

@@ -11,6 +11,7 @@ import { debounce } from '../../api/utils'
 import { formatDate } from '../../api/constant'
 import { getWrapParams } from '../../api/utils'
 import Scroll from '../../baseUI/scroll/index'
+import NoDataTip from '../../components/NoDataTip'
 import { getParts, DelPartbyId } from '../../api/request'
 import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading'
@@ -21,13 +22,13 @@ const Brief = Item.Brief;
 
 const PAGE_SIZE = 20;
 const Parts = (props) => {
-    let autoFocusInst = null;
+    // let autoFocusInst = null;
     const [searchVal, setSearchVal] = useState('');
     const [partList, setPartList] = useState([]);
     const [pageNum, setPageNum] = useState(0)
-    useEffect(() => {
-        autoFocusInst.focus()
-    })
+    // useEffect(() => {
+    //     autoFocusInst.focus()
+    // })
     useEffect(() => {
         getPartList()
         // eslint-disable-next-line
@@ -64,6 +65,8 @@ const Parts = (props) => {
         }))
         if(res && res.code === '1') {
             setPartList(res.data)
+        } else {
+            setPartList([])
         }
     }
     const getMorePartList = async () => {
@@ -149,7 +152,6 @@ const Parts = (props) => {
         <>
             <Top>
                 <SearchBar 
-                ref={ref => autoFocusInst = ref}
                 placeholder="请输入单位名称..."
                 onSubmit={value => console.log(value, 'onSubmit')}
                 onClear={value => console.log(value, 'onClear')}
@@ -192,7 +194,10 @@ const Parts = (props) => {
                             }
                         </List>
                     </div>
-                </Scroll>    
+                </Scroll>
+                {
+                    partList.length === 0 ? <NoDataTip>未查询到相关数据</NoDataTip> : null
+                }    
             </ScrollContainer>
             <Footer>
                 <Button type="primary" onClick={() => addPart()}>+新增单位</Button>

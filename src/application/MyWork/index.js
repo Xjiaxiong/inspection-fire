@@ -23,13 +23,14 @@ import {
     months,
     formatQueryDate
 } from '../../api/constant'
+import '../../api/config'
 import { getPatrolDataSelfRequest } from '../../api/request'
 import { getWrapParams } from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading'
 
 function MyWork(props) {
-    const [contentIndex, setContentIndex] = useState(0)
+    const [contentIndex, setContentIndex] = useState(global.constans.tabStateSelf)
     const [selectMonth, setSelectMonth] = useState([curMonth])
     const [dateStart, setDateStart] = useState('')
     const [dateEnd, setDateEnd] = useState('')
@@ -40,6 +41,7 @@ function MyWork(props) {
         { title: '自定义' },
     ];
     const handleChange = (data,index) => {
+        global.constans.tabStateSelf = index
         setContentIndex(index)
     }
     const onChangeMonth = v => {
@@ -170,7 +172,7 @@ function MyWork(props) {
                     </List.Item>
                     <List.Item 
                         key={3}
-                        onClick={() => toViewHiddenList('3')}
+                        onClick={() => toViewHiddenList('2')}
                         arrow="horizontal"
                         extra={renderExtra(myRecordCounts.dspnum)}>
                         已整改待审批
@@ -260,7 +262,7 @@ function MyWork(props) {
         <Container>
             <Tabs 
                 tabs={tabs} 
-                initialPage={0} 
+                initialPage={contentIndex} 
                 useOnPan={false}
                 onChange={(tab,index) => handleChange(tab,index)}>
                 <TabsBox>{renderTab()}</TabsBox>

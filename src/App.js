@@ -29,8 +29,6 @@ let curUser = {};
 function App() {
   const [routes, setRoutes] = useState(routes0)
   const checkUser = async () => {
-    // const testRes = await getUserByAuthCode(2020)
-    // console.log(testRes)
     try {
       const { code } =  await dd.getAuthCode({corpId: _config.corpId})
       localStorage.setItem('authCode',code);

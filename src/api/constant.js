@@ -103,7 +103,7 @@ export const _API = {
     GET_SET_INFO: '/wdk?action=obj.smarteyeaction&method=installInformation',
     GET_EQUIPMENT_INFO: '/wdk?action=obj.smarteyeaction&method=equipmentInfo',
     GET_PATROL_HISTORY: '/wdk?action=obj.smarteyeaction&method=GridSocialPatrolHistory',
-    GET_PARTS: '/wdk?action=obj.mhareaactionyuhuan&method=getNotInternetSocial',
+    GET_PARTS: '/wdk?action=obj.mhareaactionyuhuan&method=searchSocialName',
     ADD_PART: '/wdk?action=obj.mhareaactionyuhuan&method=saveNewSocial', 
     DEL_PART: '/wdk?action=obj.mhareaaction&method=stopSocial',
     UPDATE_PART_INFO: '/wdk?action=obj.mhareaaction&method=amendProjectInfo',
@@ -124,3 +124,4 @@ export const _API = {
     GET_CAMERAS: '/wdk?action=obj.smarteyeaction&method=queryComCameraMarkerDetail',
     GET_MAP_DATA: '/wdk?action=obj.smarteyeaction&method=queryMapData'
 }
+

@@ -5,7 +5,11 @@ import getGeolocation from 'gdt-jsapi/getGeolocation'
 
 export const baseUrl = '/api' 
 //export const baseUrl = 'https://czw.menhey.cn'
-
+global.constans = {
+    tabStateSelf: 0,
+    tabStatePatrol: 0,
+    tabStateHidden: 0
+}
 const _config = {
     corpId: '53441', //企业ID
 }

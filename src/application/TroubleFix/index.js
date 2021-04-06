@@ -22,6 +22,7 @@ import {
     months,
     formatDate,
 } from '../../api/constant'
+import '../../api/config'
 import { getHiddenStaRequest } from "../../api/request";
 import { getWrapParams } from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading'
@@ -30,7 +31,7 @@ import hideLoading from 'gdt-jsapi/hideLoading';
 const myStateMap = ['02','03','04']
 const PAGE_SIZE = 8;
 function TroubleFix(props) {
-    const [contentIndex, setContentIndex] = useState(0)
+    const [contentIndex, setContentIndex] = useState(global.constans.tabStateHidden)
     const [troubelState, setTroubelState] = useState(0)
     const [selectMonth, setSelectMonth] = useState([curMonth])
     const [dateStart, setDateStart] = useState('')
@@ -137,6 +138,7 @@ function TroubleFix(props) {
         { title: '自定义' },
     ];
     const handleChange = (data,index) => {
+        global.constans.tabStateHidden = index
         setContentIndex(index)
     }
     const onChangeState = index => {
@@ -268,7 +270,7 @@ function TroubleFix(props) {
                 <div>
                     <Tabs 
                         tabs={tabs} 
-                        initialPage={0} 
+                        initialPage={contentIndex} 
                         useOnPan={false}
                         swipeable={false}
                         onChange={(tab,index) => handleChange(tab,index)}>

@@ -22,13 +22,14 @@ import {
     months,
     formatQueryDate
 } from '../../api/constant'
+import '../../api/config'
 import { getPatrolRecordRequest } from '../../api/request'
 import { getWrapParams } from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading'
 
 function PatrolRecord(props) {
-    const [contentIndex, setContentIndex] = useState(0)
+    const [contentIndex, setContentIndex] = useState(global.constans.tabStatePatrol)
     const [selectMonth, setSelectMonth] = useState([curMonth])
     const [dateStart, setDateStart] = useState('')
     const [dateEnd, setDateEnd] = useState('')
@@ -39,6 +40,7 @@ function PatrolRecord(props) {
         { title: '自定义' },
     ];
     const handleChange = (data,index) => {
+        global.constans.tabStatePatrol = index
         setContentIndex(index)
     }
     const onChangeMonth = v => {
@@ -189,7 +191,7 @@ function PatrolRecord(props) {
         <Container>
             <Tabs 
                 tabs={tabs} 
-                initialPage={0} 
+                initialPage={contentIndex} 
                 useOnPan={false}
                 onChange={(tab,index) => handleChange(tab,index)}>
                 <TabsBox>{renderTab()}</TabsBox>
