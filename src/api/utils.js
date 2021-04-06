@@ -109,23 +109,23 @@ export const MP = () => {
       })
 }
 
-const upload = async (dataURL,index) => {
-  let fd = new FormData();
-  let blob = dataURItoBlob(dataURL);
-  fd.append('file', blob);
-  let resImg = await upImgRequest(fd)
-  const data = resImg.data[0]
-  let logoID = data && data.newFileName
-  // let imgsPre = [...imgTemps];
-  imgTemps.push({
-      "uuid": index,
-      "fattach_index": 1,
-      "fattach_link": logoID,
-      "fattach_name": logoID
-  })
-  // console.log("upload",data)
-  // setImgTemps(imgsPre)
-}
+// const upload = async (dataURL,index) => {
+//   let fd = new FormData();
+//   let blob = dataURItoBlob(dataURL);
+//   fd.append('file', blob);
+//   let resImg = await upImgRequest(fd)
+//   const data = resImg.data[0]
+//   let logoID = data && data.newFileName
+//   // let imgsPre = [...imgTemps];
+//   imgTemps.push({
+//       "uuid": index,
+//       "fattach_index": 1,
+//       "fattach_link": logoID,
+//       "fattach_name": logoID
+//   })
+//   // console.log("upload",data)
+//   // setImgTemps(imgsPre)
+// }
 export const compress = (img) =>  {
     // 用于压缩图片的canvas
   var canvas = document.createElement("canvas");
