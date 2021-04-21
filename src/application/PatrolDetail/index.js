@@ -109,6 +109,9 @@ const PatrolDetail = (props) => {
     const renderDesc = (props)=> {
         let myScore = parseFloat(props.score_info)
         let score = props.isabnormal !== '1' ? <div className='text color-green'>正常</div> : <div className='text'>扣<span className='color-red'>{myScore}分</span></div>
+        if(props.fis_normalcheck === '0') {
+            score = '无法检查'
+        }
         return (
             <DescBox>
                 <div className='row'>

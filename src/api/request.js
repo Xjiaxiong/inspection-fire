@@ -32,6 +32,14 @@ export const LoginRequest = params => {
         }
     })
 }
+export const DeleteAccountContactRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.dingaction&method=deleteAccountContact`,params,{
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    })
+}
+
 
 //首页
 export const getMainInfoRequest = params => {

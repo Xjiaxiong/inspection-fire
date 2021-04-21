@@ -34,6 +34,9 @@ function App() {
       localStorage.setItem('authCode',code);
       const userRes = await getUserByAuthCode(code)
       const { avatar, openid, accountId, nickNameCn }  = userRes.data;
+
+      localStorage.setItem('openid', openid);
+      
       //用户信息埋点
       plusUser(accountId, nickNameCn)  
       localStorage.setItem('avatar_img', avatar);
