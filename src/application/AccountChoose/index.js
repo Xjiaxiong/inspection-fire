@@ -7,7 +7,7 @@ import {
     Modal,
     Toast
 } from 'antd-mobile'
-import { LoginRequest } from '../../api/request'
+import { LoginRequest, DeleteAccountContactRequest } from '../../api/request'
 import { storeUserInfo } from '../../api/config'
 import dd from 'gdt-jsapi'
 
@@ -58,7 +58,7 @@ function AccountChoose (props) {
         paramsUser.append('fuser_uuid',fuser_uuid)
         paramsUser.append('openid',openid)
 
-        let deleteStatus = await LoginRequest(paramsUser)
+        let deleteStatus = await DeleteAccountContactRequest(paramsUser)
 
         dd.hideLoading()
         if(deleteStatus.code === "1") {
