@@ -23,7 +23,13 @@ import {
     getPartInfoRequest,
     updatePartInfoRequest
  } from '../../api/request'
-import { GetQuery, getWrapParams, debounce } from '../../api/utils'
+import { 
+    GetQuery, 
+    getWrapParams, 
+    debounce, 
+    compress, 
+    dataURItoBlob 
+} from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading';
 import hideLoading from 'gdt-jsapi/hideLoading';
 import toast from 'gdt-jsapi/toast';
@@ -123,6 +129,8 @@ const PartHandle = (props) => {
 
     const [files, setFiles] = useState([])
     const [attachId, setAttachId] = useState('')
+    const [submitIndex, setSubmitIndex] = useState(0)
+
     const { getFieldProps, setFieldsValue, getFieldsValue } = props.form
 
     const onChangeFiles = (files, type) => {
@@ -143,6 +151,12 @@ const PartHandle = (props) => {
         }
         // eslint-disable-next-line
     },[])
+    useEffect(() => {
+        if(submitIndex > 0) {
+            submitAction()
+        }
+
+    },[submitIndex])
     const initPage = async () => {
 
         //app类型options
@@ -273,27 +287,57 @@ const PartHandle = (props) => {
               return;
             }
             // validation passed
-            submitAction()
+            setSubmitIndex(submitIndex+1)
         });
     }
+    const upload = async (dataURL) => {
+        let fd = new FormData();
+        let blob = dataURItoBlob(dataURL);
+        fd.append('file', blob);
+        let resImg = await upImgRequest(fd)
+        const data = resImg.data[0]
+        let logoID = data && data.newFileName
+
+        doSubmit(logoID)
+
+    }
     const submitAction = async () => {
-        const formRes = getFieldsValue()
         //如果有图片先上传图片
         showLoading({text:'提交中...'})
         //上传图片
-        let logoID = ''
         if(files[0] && files[0].file) {
-            let formData  = new FormData();
-            formData.append("file", files[0].file);
-            let resImg = await upImgRequest(formData)
-            const data = resImg.data[0]
-            logoID = data.newFileName //获取上传以后的图片ID
-            // alert({
-            //     message: logoID+"",
-            //     title: "验证失败",
-            //     button: "确定"
-            // })
+            //压缩上传
+            let file = files[0].file
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onloadend = function () {
+                var result = this.result;
+                var img = new Image();
+                img.src = result;
+                //如果图片大小小于200kb，则直接上传
+                if (result.length <= 200*1024) {
+                    img = null;
+                    upload(result);
+                    return;
+                }
+                //图片加载完毕之后进行压缩，然后上传
+                if (img.complete) {
+                    callback();
+                } else {
+                    img.onload = callback;
+                }
+                function callback() {
+                    var data = compress(img);
+                    upload(data);
+                    img = null;
+                }
+            };
+        } else {
+            doSubmit()
         }
+    }
+    const doSubmit = async (logoID) => {
+        const formRes = getFieldsValue()
         if(attachId) {
             logoID = attachId
         }
@@ -380,10 +424,6 @@ const PartHandle = (props) => {
                 })
             }
         }
-        //另外还需额外管理，
-        //村
-        //通知类型
-        //图片
     }
     const getPos = () => {
         //调用钉钉的采点能力

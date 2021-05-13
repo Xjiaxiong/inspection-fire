@@ -43,8 +43,8 @@ function SearchPage (props) {
         debouncedSave(val)
     }
     const goCheck = uuid => {
-        let path = '/UnitCheckTypes'
-        props.history.push(`${path}?fsocial_id=${uuid}`)
+        let path = '/ProjectDetail'
+        props.history.push(`${path}?fproject_uuid=${uuid}`)
     }
     const getSearchList = async () => {
         if(!searchVal) return
@@ -132,7 +132,7 @@ function SearchPage (props) {
                             {
                                 list.map(item => (
                                     <Item
-                                        onClick={() => goCheck(item.fsocial_id)}
+                                        onClick={() => goCheck(item.fproject_uuid)}
                                         key={item.fsocial_id} 
                                         arrow="horizontal">
                                         {item.fsocial_name}
