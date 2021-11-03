@@ -34,13 +34,13 @@ const Login = (props) => {
 
         if(!userName.value || !psd.value) {
             dd.alert({
-                title:'登陆失败',
+                title:'登录失败',
                 message: '用户名或者密码必填!',
                 button: '收到'
             })
             return
         }
-        dd.showLoading({text:'登陆中...'})
+        dd.showLoading({text:'登录中...'})
         const { code } =  await dd.getAuthCode({corpId: _config.corpId})
         const userRes = await getUserByAuthCode(code)
         const { avatar, openid, accountId, employeeCode, realmId, clientId }  = userRes.data;
@@ -48,7 +48,7 @@ const Login = (props) => {
         plusUser(accountId, nickNameCn)  //用户埋点
         localStorage.setItem('avatar_img', avatar);
 
-        //登陆请求
+        //登录请求
         let paramsUser = new URLSearchParams();
         paramsUser.append('clientId', clientId)
         paramsUser.append('accountId', accountId)
@@ -74,7 +74,7 @@ const Login = (props) => {
           props.history.push('/Main')
         } else {
           dd.alert({
-            title:'登陆失败'
+            title:'登录失败'
           })
         }
     }  
@@ -94,7 +94,7 @@ const Login = (props) => {
             </List>
             <WhiteSpace size='lg'/>
             <WhiteSpace size='lg'/>
-            <Button type='primary' onClick={() => submit()}>登陆</Button>
+            <Button type='primary' onClick={() => submit()}>登录</Button>
         </Content>
     )
 }

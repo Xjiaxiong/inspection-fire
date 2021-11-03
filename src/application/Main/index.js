@@ -191,7 +191,7 @@ function Main(props) {
                             </div>
                         </DeviceTotal>
                         <SearchBox >
-                            <p onClick={() => doLink('/SearchPage')}>搜索项目名称</p>
+                            <p onClick={() => doLink('/SearchPage')}>单位搜索检查</p>
                             <i className='iconfont scan' onClick={() => doScan()}>&#xe715;</i>
                         </SearchBox>
                         <Mymenu>

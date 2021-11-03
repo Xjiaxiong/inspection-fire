@@ -45,13 +45,19 @@ export const DeleteAccountContactRequest = params => {
 export const getMainInfoRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=getMapStatistic`,params)
 }
+export const getMainTargets = params => {
+    return  axiosInstance.get(`/wdk?action=obj.fireSecurityPreventionControl&method=queryData`, params)
+}
 
 //日常巡查录入相关
 export const getCheckTypesRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.mhareanewaction&method=getTargetClassify`,params)
 }
 export const submitGridRecordDtl = params => {
-    return axiosInstance.post(`/wdk?action=obj.smarteyenewaction&method=uploadGridRecordDtl`, params)
+    return axiosInstance.post(`/wdk?action=obj.smarteyenewaction&method=uploadGridRecordDtl`, {
+        ...params,
+        apptype: 1
+    })
 }
 export const getSurroundingProjectDtl = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyenewaction&method=surroundingProject`, params)
@@ -71,6 +77,9 @@ export const getPartbriefByKeyRequest = params => {
 }
 export const getPartChecksRela = params => {
     return axiosInstance.post(`/wdk?action=obj.mhareaaction&method=getSocialInfo`,params)
+}
+export const getPartChecksByRfid = params => {
+    return axiosInstance.post(`/wdk?action=obj.mhareaaction&method=getSocialInfoByRfid`,params)
 }
 
 //隐患统计相关
@@ -242,7 +251,7 @@ export const getSysPatrolDayDetailRequest = params => {
 }
 
 /*
-    *个人工作情况
+    个人工作情况
 */ 
 export const getPatrolDataSelfRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolData`, params)
@@ -255,6 +264,10 @@ export const getHiddenListSelfRequest = params => {
 }
 export const getPatrolDataListBySocTypeSelfRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=queryPatrolDataListBySocType`, params)
+}
+
+export const getNoGridRecordDtlRequest = params => {
+    return axiosInstance.post(`/wdk?action=obj.smarteyenewaction&method=getNoGridRecordDtl`, params)
 }
 
 

@@ -9,7 +9,7 @@ import {
     Toast
 } from 'antd-mobile'
 import NoDataTip from '../../components/NoDataTip/index'
-import { getPartChecksRela} from '../../api/request'
+import { getPartChecksRela, getPartChecksByRfid} from '../../api/request'
 import { getWrapParams, GetQuery } from '../../api/utils'
 import dd from 'gdt-jsapi'
 
@@ -32,22 +32,26 @@ function UnitCheckTypes(props) {
         dd.showLoading({text: "加载中"})
         try {
             let params = {}
+            let res = null;
             if(querys.fsocial_id) {
                 params = {
                     "fsocial_uuid": querys.fsocial_id,
                 }
+                res = await getPartChecksRela(getWrapParams(params)).catch(e => {
+                    Toast.fail('请求失败!', e)
+                })
             } else {
                 params = {
                     "frfid_uuid": querys.frfid_uuid,
-                } 
+                }
+                res = await getPartChecksByRfid(getWrapParams(params)).catch(e => {
+                    Toast.fail('请求失败!', e)
+                }) 
             }
-            let res = await getPartChecksRela(getWrapParams(params)).catch(e => {
-                Toast.fail('请求失败!', e)
-            })
             dd.hideLoading()
-            console.log('getPartChecksRela',res)
+            //console.log('getPartChecksRela',res)
             //拿到数据进行处理
-            if(res.code === "1") {
+            if(res && res.code === "1") {
                 setPartInfo(res.data[0])
                 setCheckTypeList(res.data[0].modelist)
             }

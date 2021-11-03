@@ -119,14 +119,20 @@ function MyWork(props) {
         params = JSON.stringify(params)
         props.history.push(`/MyHiddenTroubles?params=${params}`)
     }
-    const toViewCheckSta = () => {
+    const toViewCheckSta = (flag) => {
+        var apptype = ''
+        if(flag) {
+            apptype = 1
+        }
         let params = {
                  "tag":"1",
+                 apptype,
         }
         if(contentIndex === 1) {
             params = {
                 "tag":"2",
-                "month": selectMonth[0]
+                "month": selectMonth[0],
+                apptype,
             }
         }
         if(contentIndex === 2) {
@@ -134,6 +140,7 @@ function MyWork(props) {
                  "tag":"3",
                  "begin_time": dateStart ? formatQueryDate(dateStart) : curDay.replace(/-/g,''),
                  "end_time": dateEnd ? formatQueryDate(dateEnd) : curDay.replace(/-/g,''),
+                  apptype,
             }
         }
         params = JSON.stringify(params)
@@ -144,6 +151,7 @@ function MyWork(props) {
         if(!recordCounts) {
             myRecordCounts = {
                 totalnum: 0,
+                zzdtotalnum: 0,
                 wzgnum: 0,
                 dspnum: 0,
                 zgwcnum: 0
@@ -159,6 +167,13 @@ function MyWork(props) {
                         arrow="horizontal"
                         extra={renderExtra(myRecordCounts.totalnum)}>
                         检查数
+                    </List.Item>
+                    <List.Item 
+                        key={5}
+                        onClick={() => toViewCheckSta('zzdupload')}
+                        arrow="horizontal"
+                        extra={renderExtra(myRecordCounts.zzdtotalnum)}>
+                        浙政钉检查数
                     </List.Item>
                 </List>
                 <Title>我的隐患整改</Title>

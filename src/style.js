@@ -54,16 +54,16 @@ a {
     color: #1f1f1f;
 } 
 .color-yellow {
-    color: #f0873a;
+    color: #f0873a!important;
 }
 .color-blue {
-    color: #739ff0;
+    color: #739ff0!important;
 }
 .color-red {
-    color: #ce2633;
+    color: #ce2633!important;
 }
 .color-green {
-    color: #15BC83;
+    color: #15BC83!important;
 }
 .f-row {
     display: -webkit-flex;

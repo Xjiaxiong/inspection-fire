@@ -1,9 +1,9 @@
 
 //匹配路由标题
 export default {
-    '/': '消防督查',
+    '/': '消防预控',
     '/AccountChoose': '职位选择',
-    '/Main': '消防督查',
+    '/Main': '消防预控',
     '/SearchAround': '搜索周边',
     '/TroubleFix': '隐患整改统计',
     '/FixInfo': '单位整改情况',
@@ -18,7 +18,7 @@ export default {
     '/PassFix': '通过',
     '/SearchPage': '请搜索',
     '/UnitCheckTypes': '检查模板选择',
-    '/Login': '登陆',
+    '/Login': '登录',
     '/Around': '周边',
     '/Myself': '我的',
     '/DemoList': '测试',
@@ -44,5 +44,6 @@ export default {
     '/MyWork':'我的工作情况',
     '/MyChecks':'我的检查情况',
     '/MyHiddenTroubles':'我的隐患整改',
-    '/PatrolDetailSelf': '检查记录清单'
+    '/PatrolDetailSelf': '检查记录清单',
+    '/CheckNo': '无法检查详情'
 }

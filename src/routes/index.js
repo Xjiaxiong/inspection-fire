@@ -47,6 +47,8 @@ import MyWork from '../application/MyWork'
 import MyChecks from '../application/MyChecks'
 import MyHiddenTroubles from '../application/MyHiddenTroubles'
 import PatrolDetailSelf from '../application/PatrolDetailSelf'
+import CheckNo from '../application/CheckNo'
+import MainTourist from '../application/MainTourist'
 
 const commomRoutes = [
     {
@@ -224,7 +226,15 @@ const commomRoutes = [
     {
         path: '/PatrolDetailSelf',
         component: PatrolDetailSelf
-    }]
+    },
+    {
+        path: '/CheckNo',
+        component: CheckNo
+    },
+    {
+        path: '/MainTourist',
+        component: MainTourist,
+    },]
 //过度路由
 export const routes0 = [{
     path: '/',
@@ -239,7 +249,7 @@ export const routes1 = [
                 path: '/',
                 exact: true,
                 render: () => (
-                    <Redirect to={"/Login"} />
+                    <Redirect to={"/MainTourist"} />
                 )
             },
             ...commomRoutes

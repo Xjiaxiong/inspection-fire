@@ -96,8 +96,13 @@ const PatrolDetail = (props) => {
     const changeVal = (e) => {
         setSearchVal(e.target.value)
     }
-    const viewMore = uuid => {
-       props.history.push(`/ChecksDetail?fgridrecordmain_uuid=${uuid}`)
+    const viewMore = (uuid,isNormal) => {
+       if(isNormal === '0') {
+           //无法检查
+        props.history.push(`/CheckNo?fgridrecordmain_uuid=${uuid}`)
+       } else {
+        props.history.push(`/ChecksDetail?fgridrecordmain_uuid=${uuid}`)
+       }
     }
     const renderIcon = isabnormal => {
         if(isabnormal === "1") {
@@ -124,7 +129,7 @@ const PatrolDetail = (props) => {
                 </div>
                 <WhiteSpace size='l'/>
                 <div className='date-box'>{formatDate(props.fenddatetime,'YYYY-MM-DD hh:mm')}</div>
-                <div className='more-link'onClick={() => viewMore(props.fgridrecordmain_uuid)}>
+                <div className='more-link'onClick={() => viewMore(props.fgridrecordmain_uuid,props.fis_normalcheck)}>
                     <span>查看详情</span>
                     <i className='iconfont'>&#xe600;</i>
                 </div>

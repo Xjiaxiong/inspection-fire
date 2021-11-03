@@ -96,7 +96,7 @@ const ProjectDetail = (props) => {
             props.history.push(`/DeviceSetupInfo?fproject_uuid=${querys.fproject_uuid}`)
         }
         if(index === "101") {
-            props.history.push(`/TroubleFix?fsocial_uuid=${projectData.fsocial_uuid}`)
+            props.history.push(`/TroubleFix?fproject_uuid=${querys.fproject_uuid}`)
         }
         if(index === "102") {
             props.history.push(`/GridManPatrols?fsocial_uuid=${projectData.fsocial_uuid}`)
@@ -143,7 +143,7 @@ const ProjectDetail = (props) => {
             <Scroll refresh>
                 <div>
                     <Title>
-                        出租屋林昭峰
+                        {projectData && projectData.fproject_name}
                         <span onClick={() => navMap()}>
                             <i className="iconfont icon">&#xe603;</i>
                             一键导航

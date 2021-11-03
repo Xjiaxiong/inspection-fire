@@ -24,13 +24,15 @@ import {
 } from '../../api/constant'
 import '../../api/config'
 import { getHiddenStaRequest } from "../../api/request";
-import { getWrapParams } from '../../api/utils'
+import { getWrapParams, GetQuery } from '../../api/utils'
 import showLoading from 'gdt-jsapi/showLoading'
 import hideLoading from 'gdt-jsapi/hideLoading';
 
 const myStateMap = ['02','03','04']
 const PAGE_SIZE = 8;
 function TroubleFix(props) {
+    const { fproject_uuid } = GetQuery(props.location.search)
+    //待定
     const [contentIndex, setContentIndex] = useState(global.constans.tabStateHidden)
     const [troubelState, setTroubelState] = useState(0)
     const [selectMonth, setSelectMonth] = useState([curMonth])
@@ -63,7 +65,8 @@ function TroubleFix(props) {
         let commomParams = {
             page_num: 0,
             page_size: pageSize,
-            fstate: myStateMap[troubelState]
+            fstate: myStateMap[troubelState],
+            fproject_uuid: fproject_uuid || ''
         }
         let parmas = {
                  flag: "2",
@@ -106,18 +109,21 @@ function TroubleFix(props) {
                  flag: "2",
                  page_num: curPage,
                  page_size: pageSize,
-                 fstate: myStateMap[troubelState]
+                 fstate: myStateMap[troubelState],
+                 fproject_uuid: fproject_uuid || ''
         }
         if(contentIndex === 1) {
             parmas = {
                 "flag":"3",
-                "moth": selectMonth[0]
+                "moth": selectMonth[0],
+                fproject_uuid: fproject_uuid || ''
             }
         }
         if(contentIndex === 2) {
             parmas = {
                  "begin_time": dateStart ? formatDate(dateStart,'YYYYMMDD') : curDay.replace(/-/g,''),
                  "end_time": dateEnd ? formatDate(dateEnd,'YYYYMMDD') : curDay.replace(/-/g,''),
+                  fproject_uuid: fproject_uuid || ''
             }
         }
 

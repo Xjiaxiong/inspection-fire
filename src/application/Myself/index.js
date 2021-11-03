@@ -21,7 +21,7 @@ const Item = List.Item;
 function Myself(props) {
     const doAbout = () => {
         dd.alert({
-            message: "Version 1.0",
+            message: "Version 1.1",
             title: "消防督查",
             button: "确定"
         }).then(res => {
@@ -57,7 +57,21 @@ function Myself(props) {
         
     }
     const doOut = () => {
-        props.history.push('/Login')
+        dd.confirm({
+            title: "温馨提示",
+            message: "您是否确定注销",
+            buttonLabels: [
+                "确定",
+                "取消"
+            ],
+        }).then(res => {
+            if(res.buttonIndex === 0) {
+                clearLocStore()
+                props.history.push('/MainTourist')
+            }
+
+        }).catch(err => {})
+        
     }
     const toChangePassWord = () => {
         props.history.push('/PswUpdate')

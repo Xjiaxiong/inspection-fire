@@ -82,7 +82,7 @@ function App() {
     checkUser()
     //eslint-disable-next-line
     // let curUser = {
-    //   fperson_uuid: "72FD89A31F50421BAAB26247702F6D4F",
+    //   fperson_uuid: "4F701E6F27F5453BAF03FA2641D5D8F1",
     //   fperson_name: "测试人员",
     //   fpermaint_uuid: "8724466BCFFE42B59A39181A62204B90",
     //   fpermaint_name: "铁拳办",

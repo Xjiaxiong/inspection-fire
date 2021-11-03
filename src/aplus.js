@@ -1,6 +1,6 @@
 const aplus_queue = window.aplus_queue;
 
-export const plusUser = (user_nick, user_id) => {
+export const plusUser = (user_id, user_nick) => {
     // 如采集用户信息是异步行为需要先执行这个BLOCK埋点
     aplus_queue.push({
         action: 'aplus.setMetaInfo',
@@ -8,10 +8,10 @@ export const plusUser = (user_nick, user_id) => {
     });
   
     // 设置会员昵称
-    // aplus_queue.push({
-    //     action: "aplus.setMetaInfo",
-    //     arguments: ["_user_nick", user_nick]
-    // });
+    aplus_queue.push({
+        action: "aplus.setMetaInfo",
+        arguments: ["_user_nick", user_nick]
+    });
     // 设置会员ID
     aplus_queue.push({
         action: "aplus.setMetaInfo",
