@@ -16,6 +16,8 @@ import userDefault from './img/ico_user.png'
 
 import { getMainTargets } from '../../api/request'
 
+const blankText = '***';
+
 function MainTourist(props) {
     const [nullText, setNullText] = useState('-')
     const [targets, setTargets] = useState(null)
@@ -29,7 +31,7 @@ function MainTourist(props) {
             <Row>
                 <img src={userDefault} alt="defaultImg"/>
                 <div className='person-info'>
-                    <p className='title'>请登陆</p>
+                    <p className='title'>请登录</p>
                 </div>
             </Row>
         )
@@ -78,23 +80,23 @@ function MainTourist(props) {
                             <div className='f-col-5 right'>
                                 <NumberGroup>
                                     <div>
-                                        <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                        <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                         <p className="label">生产企业</p>
                                     </div>
                                     <div >
-                                        <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                        <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                         <p className="label">九小场所</p>
                                     </div>
                                     <div>
-                                        <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                        <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                         <p className="label">高层建筑</p>
                                     </div>
                                     <div>
-                                        <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                        <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                         <p className="label">人密场所</p>
                                     </div>
                                     <div>
-                                        <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                        <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                         <p className="label">出租私房</p>
                                     </div>
                                 </NumberGroup>
@@ -102,27 +104,27 @@ function MainTourist(props) {
                         </TotalBox>
                         <DeviceTotal>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>远程联网</p>
                             </div>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>微型消防站</p>
                             </div>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>充电桩</p>
                             </div>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>公共视频</p>
                             </div>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>高空瞭望</p>
                             </div>
                             <div>
-                                <p className='value' onClick={() => doLink('/Login')}>{nullText}</p>
+                                <p className='value' onClick={() => doLink('/Login')}>{blankText}</p>
                                 <p className='label'>室外消火栓</p>
                             </div>
                         </DeviceTotal>

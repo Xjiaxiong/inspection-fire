@@ -24,24 +24,24 @@ function AccountChoose (props) {
     },[])
 
     const login = async () => {
-        dd.showLoading({text:'登陆中...'})
+        dd.showLoading({text:'登录中...'})
         let curUser = accounts[selectIndex];
         let { fuser_uuid, ftoken } = accounts[selectIndex];
         let paramsUser = new URLSearchParams();
         paramsUser.append('fuser_uuid',fuser_uuid)
         paramsUser.append('ftoken',ftoken)
-        //登陆中,来点状态...
+        //登录中,来点状态...
         let loginStatus = await LoginRequest(paramsUser)
-        //登陆结束...
+        //登录结束...
         dd.hideLoading()
         if(loginStatus.code === "1") {
           //缓存用户数据
           storeUserInfo(curUser)
           //localStorage.setItem('selectIndex', selectIndex);
-          //登陆成功
+          //登录成功
           props.history.push("/Main");
         } else {
-          //登陆失败
+          //登录失败
         }
         
     }
@@ -107,7 +107,7 @@ function AccountChoose (props) {
                 }
             </List>
             <WingBlank>
-                <Button type="primary" size="large" onClick={() => login()}>登陆</Button>
+                <Button type="primary" size="large" onClick={() => login()}>登录</Button>
             </WingBlank>
         </div>
         
