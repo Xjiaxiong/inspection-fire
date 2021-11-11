@@ -39,8 +39,10 @@ function MainTourist(props) {
     useEffect(() => {
         const getTargets = async () => {
             let res = await getMainTargets({})
-            console.log(res)
-            setTargets(res) 
+            if(res.code === '1') {
+                setTargets(res.data)
+            }
+             
         }
         getTargets();
         
@@ -59,21 +61,21 @@ function MainTourist(props) {
                         <TotalBox>
                             <div className='f-col-5 left'>
                                 <div>
-                                    <p className='important'>{targets ? targets.lwdwnum : nullText}</p>
+                                    <p className='important'>{targets ? targets.socialnum : '-'}</p>
                                     <p className="label">单位总数</p>
                                 </div>
                                 <div>
                                     <NumberItem onClick={() => doLink('/Login')}>
                                         <span className="label">火警告警</span>
-                                        <span className="value">{nullText}</span>
+                                        <span className="value">{targets ? targets.firenum : '-'}</span>
                                     </NumberItem>
                                     <NumberItem onClick={() => doLink('/Login')}>
                                         <span className="label">设备告警</span>
-                                        <span className="value">{nullText}</span>
+                                        <span className="value">{targets ? targets.devicealarmnum : '-'}</span>
                                     </NumberItem>
                                     <NumberItem>
                                         <span className="label">隐患</span>
-                                        <span className="value">{nullText}</span>
+                                        <span className="value">{targets ? targets.hdcorrectmainnum : '-'}</span>
                                     </NumberItem>
                                 </div>
                             </div>

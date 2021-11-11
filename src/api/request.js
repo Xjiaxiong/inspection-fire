@@ -46,7 +46,7 @@ export const getMainInfoRequest = params => {
     return axiosInstance.post(`/wdk?action=obj.smarteyeaction&method=getMapStatistic`,params)
 }
 export const getMainTargets = params => {
-    return  axiosInstance.get(`/wdk?action=obj.fireSecurityPreventionControl&method=queryData`, params)
+    return  axiosInstance.get(`/wdk?action=obj.smarteyeaction&method=getData`, params)
 }
 
 //日常巡查录入相关

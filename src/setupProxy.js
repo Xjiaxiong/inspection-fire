@@ -5,7 +5,7 @@ const proService = 'https://czw.menhey.cn'
 const mockService = 'http://localhost:3001'
 module.exports = function(app) {
   app.use(proxy.createProxyMiddleware('/api', { 
-      target: proService,
+      target: locService,
       changeOrigin: true,
       pathRewrite: {
         "^/api": "/" 

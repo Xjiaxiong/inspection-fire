@@ -22,7 +22,7 @@ function Myself(props) {
     const doAbout = () => {
         dd.alert({
             message: "Version 1.1",
-            title: "消防督查",
+            title: "消防预控",
             button: "确定"
         }).then(res => {
             console.log(res)
