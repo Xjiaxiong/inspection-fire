@@ -1,9 +1,9 @@
 
 //匹配路由标题
 export default {
-    '/': '消防预控',
+    '/': '消消了',
     '/AccountChoose': '职位选择',
-    '/Main': '消防预控',
+    '/Main': '消消了',
     '/SearchAround': '搜索周边',
     '/TroubleFix': '隐患整改统计',
     '/FixInfo': '单位整改情况',
