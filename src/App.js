@@ -79,7 +79,7 @@ function App() {
   }
  
   useEffect(() => {
-    checkUser()
+    //checkUser()
     //eslint-disable-next-line
     // let curUser = {
     //   fperson_uuid: "4F701E6F27F5453BAF03FA2641D5D8F1",

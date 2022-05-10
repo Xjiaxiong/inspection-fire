@@ -49,6 +49,7 @@ import MyHiddenTroubles from '../application/MyHiddenTroubles'
 import PatrolDetailSelf from '../application/PatrolDetailSelf'
 import CheckNo from '../application/CheckNo'
 import MainTourist from '../application/MainTourist'
+import Demo from '../application/Demo'
 
 const commomRoutes = [
     {
@@ -238,7 +239,7 @@ const commomRoutes = [
 //过度路由
 export const routes0 = [{
     path: '/',
-    component: InitLoading,
+    component: Demo,
 }]   
 //无权限路由
 export const routes1 = [    
